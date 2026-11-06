@@ -1,0 +1,9 @@
+pillow>=10
+numpy>=1.26
+transformers>=5.22
+jinja2>=3.1
+edge-tts>=6.1
+
+# 生成权重时还需要 torch。分词演示 --tokens-only 不需要 torch。
+# apply_chat_template 需要 jinja2。Transformers 5.22 不把它算进默认依赖。
+# 画面用系统里的 ffmpeg 编码，不通过 Python 包安装。

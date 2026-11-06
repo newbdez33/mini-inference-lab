@@ -1,0 +1,232 @@
+{
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "user_text": "什么是 token？",
+  "transformers": "5.22.1",
+  "bare_pieces": [
+    {
+      "id": 106582,
+      "text": "什么是"
+    },
+    {
+      "id": 3950,
+      "text": " token"
+    },
+    {
+      "id": 11319,
+      "text": "？"
+    }
+  ],
+  "bare_count": 3,
+  "prompt": "<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\n什么是 token？<|im_end|>\n<|im_start|>assistant\n",
+  "prompt_pieces": [
+    {
+      "id": 151644,
+      "text": "<|im_start|>",
+      "start": 0,
+      "end": 12
+    },
+    {
+      "id": 8948,
+      "text": "system",
+      "start": 12,
+      "end": 18
+    },
+    {
+      "id": 198,
+      "text": "\n",
+      "start": 18,
+      "end": 19
+    },
+    {
+      "id": 2610,
+      "text": "You",
+      "start": 19,
+      "end": 22
+    },
+    {
+      "id": 525,
+      "text": " are",
+      "start": 22,
+      "end": 26
+    },
+    {
+      "id": 1207,
+      "text": " Q",
+      "start": 26,
+      "end": 28
+    },
+    {
+      "id": 16948,
+      "text": "wen",
+      "start": 28,
+      "end": 31
+    },
+    {
+      "id": 11,
+      "text": ",",
+      "start": 31,
+      "end": 32
+    },
+    {
+      "id": 3465,
+      "text": " created",
+      "start": 32,
+      "end": 40
+    },
+    {
+      "id": 553,
+      "text": " by",
+      "start": 40,
+      "end": 43
+    },
+    {
+      "id": 54364,
+      "text": " Alibaba",
+      "start": 43,
+      "end": 51
+    },
+    {
+      "id": 14817,
+      "text": " Cloud",
+      "start": 51,
+      "end": 57
+    },
+    {
+      "id": 13,
+      "text": ".",
+      "start": 57,
+      "end": 58
+    },
+    {
+      "id": 1446,
+      "text": " You",
+      "start": 58,
+      "end": 62
+    },
+    {
+      "id": 525,
+      "text": " are",
+      "start": 62,
+      "end": 66
+    },
+    {
+      "id": 264,
+      "text": " a",
+      "start": 66,
+      "end": 68
+    },
+    {
+      "id": 10950,
+      "text": " helpful",
+      "start": 68,
+      "end": 76
+    },
+    {
+      "id": 17847,
+      "text": " assistant",
+      "start": 76,
+      "end": 86
+    },
+    {
+      "id": 13,
+      "text": ".",
+      "start": 86,
+      "end": 87
+    },
+    {
+      "id": 151645,
+      "text": "<|im_end|>",
+      "start": 87,
+      "end": 97
+    },
+    {
+      "id": 198,
+      "text": "\n",
+      "start": 97,
+      "end": 98
+    },
+    {
+      "id": 151644,
+      "text": "<|im_start|>",
+      "start": 98,
+      "end": 110
+    },
+    {
+      "id": 872,
+      "text": "user",
+      "start": 110,
+      "end": 114
+    },
+    {
+      "id": 198,
+      "text": "\n",
+      "start": 114,
+      "end": 115
+    },
+    {
+      "id": 106582,
+      "text": "什么是",
+      "start": 115,
+      "end": 118
+    },
+    {
+      "id": 3950,
+      "text": " token",
+      "start": 118,
+      "end": 124
+    },
+    {
+      "id": 11319,
+      "text": "？",
+      "start": 124,
+      "end": 125
+    },
+    {
+      "id": 151645,
+      "text": "<|im_end|>",
+      "start": 125,
+      "end": 135
+    },
+    {
+      "id": 198,
+      "text": "\n",
+      "start": 135,
+      "end": 136
+    },
+    {
+      "id": 151644,
+      "text": "<|im_start|>",
+      "start": 136,
+      "end": 148
+    },
+    {
+      "id": 77091,
+      "text": "assistant",
+      "start": 148,
+      "end": 157
+    },
+    {
+      "id": 198,
+      "text": "\n",
+      "start": 157,
+      "end": 158
+    }
+  ],
+  "prompt_count": 32,
+  "round_half_billion": {
+    "params": 500000000,
+    "fp32_gb": 2.0,
+    "fp16_or_bf16_gb": 1.0,
+    "note": "十进制 GB。只按 5×10^8 参数乘每参数字节数，不是显存实测。"
+  },
+  "structure_params": 494032768,
+  "structure_fp32_gb": 1.976131072,
+  "structure_fp16_or_bf16_gb": 0.988065536,
+  "kv_bytes_per_token_fp16": 12288,
+  "notes": [
+    "bare_pieces 是正文本身，没有对话模板。",
+    "prompt 含默认系统提示、user 标记和 assistant 生成提示。",
+    "结构参数按当前库的 Qwen2 模块相加，未加载权重核对。",
+    "FP16 与 BF16 每个权重参数都是 2 字节，理论体积相同。"
+  ]
+}
