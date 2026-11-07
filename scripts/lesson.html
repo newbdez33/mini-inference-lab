@@ -45,6 +45,13 @@
             <button type="button" role="radio" data-device="cuda" aria-checked="false" tabindex="-1">GPU · NVIDIA CUDA</button>
           </div>
         </div>
+        <div class="environment-switcher" hidden>
+          <span id="environment-label">Python 环境</span>
+          <div class="environment-options" role="radiogroup" aria-labelledby="environment-label">
+            <button type="button" role="radio" data-environment="venv" aria-checked="true">venv（推荐）</button>
+            <button type="button" role="radio" data-environment="current" aria-checked="false" tabindex="-1">无 venv</button>
+          </div>
+        </div>
         <p class="experiment-time"><strong>预计 10–15 分钟</strong><span>首次安装与下载等待另计</span></p>
         <div class="hero-actions"><a class="button" href="../downloads/mini-lab-01.zip" download>下载实验包 <span aria-hidden="true">↓</span></a><a class="secondary-link" href="#download">一步一步开始 →</a></div>
         <ul class="tags" aria-label="实验环境"><li>Python</li><li data-device-label>CPU</li></ul>

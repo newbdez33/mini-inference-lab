@@ -10,8 +10,8 @@
   <link rel="icon" href="../assets/mini-head.png" type="image/png">
   <link rel="preload" href="../assets/fonts/noto-sans-sc-lab.woff2" as="font" type="font/woff2" crossorigin>
   <script src="../assets/theme.js?v=ef3ef90701ad"></script>
-  <link rel="stylesheet" href="../assets/site.css?v=a0bbc8e0f6f3">
-  <script src="../assets/site.js?v=b282ad64994c" defer></script>
+  <link rel="stylesheet" href="../assets/site.css?v=419fb326dd50">
+  <script src="../assets/site.js?v=951225164a22" defer></script>
 </head>
 <body class="lesson-page">
   <a class="skip-link" href="#tutorial">跳到教程正文</a>
@@ -45,6 +45,13 @@
             <button type="button" role="radio" data-device="cuda" aria-checked="false" tabindex="-1">GPU · NVIDIA CUDA</button>
           </div>
         </div>
+        <div class="environment-switcher" hidden>
+          <span id="environment-label">Python 环境</span>
+          <div class="environment-options" role="radiogroup" aria-labelledby="environment-label">
+            <button type="button" role="radio" data-environment="venv" aria-checked="true">venv（推荐）</button>
+            <button type="button" role="radio" data-environment="current" aria-checked="false" tabindex="-1">无 venv</button>
+          </div>
+        </div>
         <p class="experiment-time"><strong>预计 10–15 分钟</strong><span>首次安装与下载等待另计</span></p>
         <div class="hero-actions"><a class="button" href="../downloads/mini-lab-01.zip" download>下载实验包 <span aria-hidden="true">↓</span></a><a class="secondary-link" href="#download">一步一步开始 →</a></div>
         <ul class="tags" aria-label="实验环境"><li>Python</li><li data-device-label>CPU</li></ul>
@@ -76,7 +83,7 @@
       </aside>
       <article id="tutorial" class="tutorial"><p>这是 Mini 的第一个模型推理实验：在自己的电脑上运行一个小模型，问它一个问题，再只换输入，看看回答怎么变。</p>
 <p><strong>预计用时：10–15 分钟。</strong> 包括阅读步骤和动手操作；首次安装 Python、安装依赖及下载模型的等待时间另计。</p>
-<p><strong>本篇使用 Python，默认在 CPU 上运行；Windows 和 Linux 可选 NVIDIA GPU。</strong> 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。在页面顶部选择系统和运行设备，安装、检查和运行命令会一起切换。点击命令块右上角的“复制命令”，即可粘贴到终端。Windows 请使用 PowerShell，macOS 和 Linux 使用终端。</p>
+<p><strong>本篇使用 Python，默认使用 venv，在 CPU 上运行；Windows 和 Linux 可选 NVIDIA GPU。</strong> 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。在页面顶部选择系统、运行设备和 Python 环境，准备步骤与命令会一起切换。点击命令块右上角的“复制命令”，即可粘贴到终端。Windows 请使用 PowerShell，macOS 和 Linux 使用终端。</p>
 <div data-platforms="macos">
 <p><strong>macOS：</strong> 本实验使用 CPU，无需选择运行设备。</p>
 </div>
@@ -125,9 +132,16 @@
 </code></pre>
 </div>
 </div>
+<div data-environments="venv">
 <blockquote>
-<p>可选：在独立的 Python 虚拟环境（<a href="https://docs.python.org/zh-cn/3/library/venv.html">venv</a>）中运行本实验，可减少与其他项目的依赖冲突。</p>
+<p>使用独立的 Python 虚拟环境（<a href="https://docs.python.org/zh-cn/3/library/venv.html">venv</a>）可减少与其他项目的依赖冲突。稍后进入实验目录再创建。</p>
 </blockquote>
+</div>
+<div data-environments="current">
+<blockquote>
+<p>无 venv 时，依赖会安装到当前 Python 环境，可能影响其他项目。需要隔离时，可在顶部改选 <a href="https://docs.python.org/zh-cn/3/library/venv.html">venv</a>。</p>
+</blockquote>
+</div>
 <p>本实验需要 <strong>Python 3.11 或更新版本</strong>，命令统一写作 <code>python</code>。版本符合就可以继续，无需特地更换已有环境。这里是在检查电脑上已有的工具，还没有进入实验目录。</p>
 <details>
 <summary>找不到 Python，或版本太旧？</summary>
@@ -162,9 +176,8 @@ dir
 <p><strong>完成检查：</strong> 两个文件名都能列出，没有文件或路径不存在的报错。后面所有命令都在这个终端、这个目录里执行。</p>
 <p><a id="environment"></a></p>
 <h2 id="04">04 · 安装实验依赖</h2>
-<details>
-<summary>可选 · 使用虚拟环境（venv）</summary>
-<p>需要隔离实验依赖时，在当前实验目录创建并激活虚拟环境：</p>
+<div data-environments="venv">
+<p>先在当前实验目录创建并激活虚拟环境：</p>
 <div class="platform-commands">
 <div data-platforms="macos linux">
 <p><strong>macOS · Linux</strong></p>
@@ -182,41 +195,44 @@ python -c &quot;import sys; print(sys.executable)&quot;
 </div>
 </div>
 <p>这会在当前目录创建 <code>.venv</code> 文件夹。<strong>完成检查：</strong> 最后一行打印的 Python 路径应位于当前实验目录的 <code>.venv</code> 中。确认后，再在同一个终端安装依赖。重新打开终端时，回到实验目录，再执行激活那一行即可。</p>
-</details>
+</div>
+<div data-environments="current">
+<p>当前选择无 venv，直接使用当前 Python 安装依赖。如果此前已激活本实验的 <code>.venv</code>，先执行 <code>deactivate</code>。</p>
+</div>
 <p>安装实验包中列出的依赖：</p>
-<div class="platform-commands">
+<div class="platform-commands" data-venv-install="data-venv-install">
 <div data-platforms="macos">
 <p><strong>macOS</strong></p>
-<pre><code class="language-sh">python -m pip install -r requirements.txt
+<pre><code class="language-sh">python -m pip --require-virtualenv install -r requirements.txt
 </code></pre>
 </div>
 <div data-devices="cpu" data-platforms="windows">
 <p><strong>Windows · PowerShell · CPU</strong></p>
-<pre><code class="language-powershell">python -m pip install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
-python -m pip install -r requirements.txt
+<pre><code class="language-powershell">python -m pip --require-virtualenv install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
+python -m pip --require-virtualenv install -r requirements.txt
 </code></pre>
 <p>先安装 CPU 版 PyTorch，再安装其余依赖。</p>
 </div>
 <div data-devices="cpu" data-platforms="linux">
 <p><strong>Linux · CPU</strong></p>
-<pre><code class="language-sh">python -m pip install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
-python -m pip install -r requirements.txt
+<pre><code class="language-sh">python -m pip --require-virtualenv install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
+python -m pip --require-virtualenv install -r requirements.txt
 </code></pre>
 <p>先安装 CPU 版 PyTorch，再安装其余依赖。</p>
 </div>
 <div data-devices="cuda" data-platforms="windows">
 <p><strong>Windows · PowerShell · NVIDIA GPU</strong></p>
 <pre><code class="language-powershell">nvidia-smi
-python -m pip install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
+python -m pip --require-virtualenv install -r requirements.txt
 </code></pre>
 <p>先确认第一条命令能显示 NVIDIA 显卡和驱动信息，再安装 CUDA 版 PyTorch。更换 CPU／GPU 选项后，需要重新执行对应的安装命令。</p>
 </div>
 <div data-devices="cuda" data-platforms="linux">
 <p><strong>Linux · NVIDIA GPU</strong></p>
 <pre><code class="language-sh">nvidia-smi
-python -m pip install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
+python -m pip --require-virtualenv install -r requirements.txt
 </code></pre>
 <p>先确认第一条命令能显示 NVIDIA 显卡和驱动信息，再安装 CUDA 版 PyTorch。更换 CPU／GPU 选项后，需要重新执行对应的安装命令。</p>
 </div>
@@ -354,8 +370,12 @@ python -c &quot;import torch; print('CUDA:', torch.cuda.is_available()); print(t
 <td>回到“安装实验依赖”，确认顶部选对系统和运行设备，再用同一个 <code>python -m pip</code> 安装依赖。</td>
 </tr>
 <tr>
+<td><code>Could not find an activated virtualenv</code></td>
+<td>当前命令要求使用虚拟环境。回到“安装实验依赖”，激活 <code>.venv</code> 并检查 Python 路径，再安装。</td>
+</tr>
+<tr>
 <td><code>dependency conflicts</code>，出现本实验未使用的软件包</td>
-<td>当前环境的其他项目可能需要不同版本。可展开“使用虚拟环境”，在独立的 <code>.venv</code> 中安装实验依赖；原环境中已发生的版本变更需要单独处理。</td>
+<td>当前环境的其他项目可能需要不同版本。可在顶部改选 venv，在独立的 <code>.venv</code> 中安装实验依赖；原环境中已发生的版本变更需要单独处理。</td>
 </tr>
 <tr>
 <td>安装失败，或版本检查失败</td>

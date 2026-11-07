@@ -4,7 +4,7 @@
 
 **预计用时：10–15 分钟。** 包括阅读步骤和动手操作；首次安装 Python、安装依赖及下载模型的等待时间另计。
 
-**本篇使用 Python，默认在 CPU 上运行；Windows 和 Linux 可选 NVIDIA GPU。** 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。在页面顶部选择系统和运行设备，安装、检查和运行命令会一起切换。点击命令块右上角的“复制命令”，即可粘贴到终端。Windows 请使用 PowerShell，macOS 和 Linux 使用终端。
+**本篇使用 Python，默认使用 venv，在 CPU 上运行；Windows 和 Linux 可选 NVIDIA GPU。** 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。在页面顶部选择系统、运行设备和 Python 环境，准备步骤与命令会一起切换。点击命令块右上角的“复制命令”，即可粘贴到终端。Windows 请使用 PowerShell，macOS 和 Linux 使用终端。
 
 <div data-platforms="macos" markdown="1">
 
@@ -65,7 +65,16 @@ python --version
 </div>
 </div>
 
-> 可选：在独立的 Python 虚拟环境（[venv](https://docs.python.org/zh-cn/3/library/venv.html)）中运行本实验，可减少与其他项目的依赖冲突。
+<div data-environments="venv" markdown="1">
+
+> 使用独立的 Python 虚拟环境（[venv](https://docs.python.org/zh-cn/3/library/venv.html)）可减少与其他项目的依赖冲突。稍后进入实验目录再创建。
+
+</div>
+<div data-environments="current" markdown="1">
+
+> 无 venv 时，依赖会安装到当前 Python 环境，可能影响其他项目。需要隔离时，可在顶部改选 [venv](https://docs.python.org/zh-cn/3/library/venv.html)。
+
+</div>
 
 本实验需要 **Python 3.11 或更新版本**，命令统一写作 `python`。版本符合就可以继续，无需特地更换已有环境。这里是在检查电脑上已有的工具，还没有进入实验目录。
 
@@ -127,10 +136,9 @@ dir
 
 ## 04 · 安装实验依赖
 
-<details markdown="1">
-<summary>可选 · 使用虚拟环境（venv）</summary>
+<div data-environments="venv" markdown="1">
 
-需要隔离实验依赖时，在当前实验目录创建并激活虚拟环境：
+先在当前实验目录创建并激活虚拟环境：
 
 <div class="platform-commands" markdown="1">
 <div data-platforms="macos linux" markdown="1">
@@ -159,17 +167,22 @@ python -c "import sys; print(sys.executable)"
 
 这会在当前目录创建 `.venv` 文件夹。**完成检查：** 最后一行打印的 Python 路径应位于当前实验目录的 `.venv` 中。确认后，再在同一个终端安装依赖。重新打开终端时，回到实验目录，再执行激活那一行即可。
 
-</details>
+</div>
+<div data-environments="current" markdown="1">
+
+当前选择无 venv，直接使用当前 Python 安装依赖。如果此前已激活本实验的 `.venv`，先执行 `deactivate`。
+
+</div>
 
 安装实验包中列出的依赖：
 
-<div class="platform-commands" markdown="1">
+<div class="platform-commands" data-venv-install markdown="1">
 <div data-platforms="macos" markdown="1">
 
 **macOS**
 
 ```sh
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install -r requirements.txt
 ```
 
 </div>
@@ -178,8 +191,8 @@ python -m pip install -r requirements.txt
 **Windows · PowerShell · CPU**
 
 ```powershell
-python -m pip install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
+python -m pip --require-virtualenv install -r requirements.txt
 ```
 
 先安装 CPU 版 PyTorch，再安装其余依赖。
@@ -190,8 +203,8 @@ python -m pip install -r requirements.txt
 **Linux · CPU**
 
 ```sh
-python -m pip install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
+python -m pip --require-virtualenv install -r requirements.txt
 ```
 
 先安装 CPU 版 PyTorch，再安装其余依赖。
@@ -203,8 +216,8 @@ python -m pip install -r requirements.txt
 
 ```powershell
 nvidia-smi
-python -m pip install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
+python -m pip --require-virtualenv install -r requirements.txt
 ```
 
 先确认第一条命令能显示 NVIDIA 显卡和驱动信息，再安装 CUDA 版 PyTorch。更换 CPU／GPU 选项后，需要重新执行对应的安装命令。
@@ -216,8 +229,8 @@ python -m pip install -r requirements.txt
 
 ```sh
 nvidia-smi
-python -m pip install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
+python -m pip --require-virtualenv install -r requirements.txt
 ```
 
 先确认第一条命令能显示 NVIDIA 显卡和驱动信息，再安装 CUDA 版 PyTorch。更换 CPU／GPU 选项后，需要重新执行对应的安装命令。
@@ -423,7 +436,8 @@ CPU 和 GPU 路径都使用 float32，关闭采样，最多生成 64 个新 toke
 | 找不到 `python` 命令 | 回到“先确认 Python 能用”，确认安装和命令搜索路径，再检查版本。 |
 | `requirements.txt` 或脚本找不到 | 回到“在实验目录打开终端”，确认解压目录和文件名。不要新建空文件来绕过错误。 |
 | `ModuleNotFoundError` | 回到“安装实验依赖”，确认顶部选对系统和运行设备，再用同一个 `python -m pip` 安装依赖。 |
-| `dependency conflicts`，出现本实验未使用的软件包 | 当前环境的其他项目可能需要不同版本。可展开“使用虚拟环境”，在独立的 `.venv` 中安装实验依赖；原环境中已发生的版本变更需要单独处理。 |
+| `Could not find an activated virtualenv` | 当前命令要求使用虚拟环境。回到“安装实验依赖”，激活 `.venv` 并检查 Python 路径，再安装。 |
+| `dependency conflicts`，出现本实验未使用的软件包 | 当前环境的其他项目可能需要不同版本。可在顶部改选 venv，在独立的 `.venv` 中安装实验依赖；原环境中已发生的版本变更需要单独处理。 |
 | 安装失败，或版本检查失败 | 先确认 Python 版本符合上方要求，再检查网络和完整报错。 |
 | 模型下载失败 | 检查能否访问模型页面，再运行同一条命令；已有缓存通常可以复用。 |
 | 一直显示加载或下载进度 | 首次下载和推理可能需要等待；没有报错时先让当前进程完成。 |

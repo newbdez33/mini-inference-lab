@@ -28,7 +28,7 @@ function createCopyButton(getCode) {
     const text = code.textContent.replace(/\n$/, "");
     try {
       await navigator.clipboard.writeText(text);
-      if (getCode() === code) label.textContent = "已复制";
+      if (getCode() === code && code.textContent.replace(/\n$/, "") === text) label.textContent = "已复制";
       status.textContent = codeLanguage(code) === "text" ? "已复制问题，请在 Prompt 后粘贴。" : "已复制命令，可以粘贴到终端。";
     } catch {
       const selection = window.getSelection();
@@ -76,21 +76,28 @@ const devices = [
   {id: "cpu", label: "CPU"},
   {id: "cuda", label: "GPU · NVIDIA CUDA"},
 ];
+const environments = ["venv", "current"];
 let selectedPlatform = "macos";
 let selectedDevice = "cpu";
+let selectedEnvironment = "venv";
 try {
   const saved = localStorage.getItem("mini-inference-platform");
   if (platforms.some(platform => platform.id === saved)) selectedPlatform = saved;
   const savedDevice = localStorage.getItem("mini-inference-device");
   if (devices.some(device => device.id === savedDevice)) selectedDevice = savedDevice;
+  const savedEnvironment = localStorage.getItem("mini-inference-environment");
+  if (environments.includes(savedEnvironment)) selectedEnvironment = savedEnvironment;
 } catch {}
 
 const platformGroups = [];
-const environmentPanels = [...document.querySelectorAll(".tutorial [data-platforms], .tutorial [data-devices]")];
+const pipCommands = [];
+const environmentPanels = [...document.querySelectorAll(".tutorial [data-platforms], .tutorial [data-devices], .tutorial [data-environments]")];
 const platformSwitcher = document.querySelector(".platform-switcher");
 const platformRadios = [...document.querySelectorAll(".platform-options [data-platform]")];
 const deviceSwitcher = document.querySelector(".device-switcher");
 const deviceRadios = [...document.querySelectorAll(".device-options [data-device]")];
+const environmentSwitcher = document.querySelector(".environment-switcher");
+const environmentRadios = [...document.querySelectorAll(".environment-options [data-environment]")];
 
 function effectiveDevice() {
   return selectedPlatform === "macos" ? "cpu" : selectedDevice;
@@ -98,7 +105,8 @@ function effectiveDevice() {
 
 function matchesEnvironment(panel) {
   return (!panel.dataset.platforms || panel.dataset.platforms.split(" ").includes(selectedPlatform)) &&
-    (!panel.dataset.devices || panel.dataset.devices.split(" ").includes(effectiveDevice()));
+    (!panel.dataset.devices || panel.dataset.devices.split(" ").includes(effectiveDevice())) &&
+    (!panel.dataset.environments || panel.dataset.environments.split(" ").includes(selectedEnvironment));
 }
 
 function updateEnvironment() {
@@ -106,6 +114,10 @@ function updateEnvironment() {
   const device = effectiveDevice();
   for (const panel of environmentPanels) {
     panel.hidden = !matchesEnvironment(panel);
+  }
+  for (const {code, text} of pipCommands) {
+    code.textContent = selectedEnvironment === "venv" ? text : text.replaceAll(" --require-virtualenv", "");
+    formatCommand(code);
   }
   for (const group of platformGroups) {
     const code = group.getCode();
@@ -122,6 +134,11 @@ function updateEnvironment() {
     radio.setAttribute("aria-checked", String(selected));
     radio.tabIndex = selected ? 0 : -1;
   }
+  for (const radio of environmentRadios) {
+    const selected = radio.dataset.environment === selectedEnvironment;
+    radio.setAttribute("aria-checked", String(selected));
+    radio.tabIndex = selected ? 0 : -1;
+  }
   if (deviceSwitcher) deviceSwitcher.hidden = selectedPlatform === "macos";
   for (const label of document.querySelectorAll("[data-device-label]")) {
     label.textContent = devices.find(item => item.id === device).label;
@@ -129,6 +146,7 @@ function updateEnvironment() {
   try {
     localStorage.setItem("mini-inference-platform", selectedPlatform);
     localStorage.setItem("mini-inference-device", selectedDevice);
+    localStorage.setItem("mini-inference-environment", selectedEnvironment);
   } catch {}
 }
 
@@ -167,7 +185,9 @@ for (const [index, group] of [...document.querySelectorAll(".platform-commands")
   for (const panel of panels) {
     panel.firstElementChild.classList.add("platform-label");
     panel.querySelector("pre").tabIndex = 0;
-    formatCommand(panel.querySelector("code"));
+    const code = panel.querySelector("code");
+    if (group.hasAttribute("data-venv-install")) pipCommands.push({code, text: code.textContent});
+    formatCommand(code);
   }
   const getCode = () => panels.find(matchesEnvironment).querySelector("code");
   const copyButton = createCopyButton(getCode);
@@ -184,8 +204,13 @@ bindChoiceControls(deviceRadios, button => {
   selectedDevice = button.dataset.device;
   updateEnvironment();
 });
+bindChoiceControls(environmentRadios, button => {
+  selectedEnvironment = button.dataset.environment;
+  updateEnvironment();
+});
 updateEnvironment();
 if (platformSwitcher) platformSwitcher.hidden = false;
+if (environmentSwitcher) environmentSwitcher.hidden = false;
 
 for (const pre of document.querySelectorAll(".tutorial pre")) {
   if (pre.closest(".platform-commands")) continue;
