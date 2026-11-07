@@ -1,0 +1,266 @@
+# 让模型介绍自己
+
+这是 Mini 的第一个模型推理实验：在自己的电脑上运行一个小模型，让它介绍自己，再只换一个问题，看看回答怎么变。
+
+**本篇主流程：macOS（Apple Silicon / M 系列）· Python 3.12 · CPU。无需独立显卡。** 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。Windows 和 Linux 的对应命令放在文末。
+
+<a id="download"></a>
+
+## 01 · 下载并解压实验包
+
+[下载 mini-lab-01.zip](https://github.com/newbdez33/mini-inference-lab/raw/refs/heads/main/packages/mini-lab-01.zip)
+
+下载完成后，双击 ZIP 解压。包内已经有 `mini-lab-01` 文件夹，**不用自己新建目录，也不用自己写脚本或依赖清单**。
+
+```text
+mini-lab-01/
+├── README.md
+├── example_infer.py
+├── requirements.txt
+└── terminal-recordings.json
+```
+
+| 文件 | 你会用它做什么 |
+| --- | --- |
+| `README.md` | 当前这份操作说明，下载后也可以阅读。 |
+| `example_infer.py` | 已写好的完整推理脚本，稍后直接运行。 |
+| `requirements.txt` | 随实验包提供的依赖清单，用来安装指定版本的库。 |
+| `terminal-recordings.json` | 本次实验保存的两个实际输入和回答，用来对照。 |
+
+**完成检查：** 打开解压后的文件夹，能看到上面四个文件。
+
+<a id="python"></a>
+
+## 02 · 先确认 Python 能用
+
+打开 macOS 的“终端”应用，运行：
+
+```sh
+python3.12 --version
+```
+
+看到 `Python 3.12.x` 就可以继续，末尾的补丁版本可以不同。这里是在检查电脑上已有的工具，还没有进入实验目录。
+
+<details markdown="1">
+<summary>找不到 python3.12？先安装，再继续</summary>
+
+如果已经有 Homebrew，执行下面的命令。没有 Homebrew 时，先按 [Homebrew 官方安装说明](https://docs.brew.sh/Installation)安装，并完成安装器显示的 shell 配置步骤，然后重新打开终端。
+
+```sh
+brew install python@3.12
+python3.12 --version
+```
+
+这是 [Homebrew 的 Python 3.12 安装方式](https://formulae.brew.sh/formula/python@3.12)。**确认版本检查成功后，再执行后面的环境命令。** 不要因为系统里能运行 `python3`，就默认它一定是 3.12。
+
+如果使用其他 Python 管理工具，也可以使用其 Python 3.12 解释器；本篇命令统一写作 `python3.12`。
+
+</details>
+
+<a id="directory"></a>
+
+## 03 · 在实验目录打开终端
+
+如果 ZIP 下载并解压在默认的“下载”目录，执行：
+
+```sh
+cd "$HOME/Downloads/mini-lab-01"
+```
+
+如果你解压在其他位置，在终端输入 `cd `（末尾留一个空格），把解压后的 `mini-lab-01` 文件夹拖进终端，再按回车。
+
+确认当前目录里确实有这三个文件：
+
+```sh
+ls README.md example_infer.py requirements.txt
+```
+
+**完成检查：** 三个文件名都能列出，没有 `No such file or directory`。后面所有命令都在这个终端、这个目录里执行。
+
+<a id="environment"></a>
+
+## 04 · 准备实验环境
+
+先给这个实验创建一个单独的 Python 环境：
+
+```sh
+python3.12 -m venv .venv
+```
+
+激活它，再确认一次 Python 版本：
+
+```sh
+source .venv/bin/activate
+python --version
+```
+
+现在应显示 `Python 3.12.x`。终端提示符通常也会多出 `(.venv)`。
+
+安装实验包中列出的依赖：
+
+```sh
+python -m pip install -r requirements.txt
+```
+
+等安装结束、终端重新出现提示符后，再检查两个主要库：
+
+```sh
+python -c "import torch, transformers; print(torch.__version__); print(transformers.__version__)"
+```
+
+**完成检查：** 能打印 PyTorch 和 Transformers 的版本号，没有导入错误。实验包固定使用 PyTorch 2.15.0、Transformers 5.22.1 和 Jinja2 3.1.6。
+
+`requirements.txt` 就在当前目录中，安装命令会读取它。它不会被自动下载，也不需要你另行创建。
+
+<a id="first-run"></a>
+
+## 05 · 第一个实验：让模型介绍自己
+
+运行刚才下载的完整脚本：
+
+```sh
+python example_infer.py
+```
+
+看到 `Prompt:` 后，输入下面这句话，再按回车：
+
+```text
+用一句话介绍你自己。
+```
+
+脚本会加载 `Qwen/Qwen2.5-0.5B-Instruct`。第一次需要从 Hugging Face 下载模型；后续复用缓存。看到 `Loading` 或下载进度时，先等待，不要重复启动脚本。
+
+模型加载好后会出现 `Generating...`，然后是 `Answer:`。这是我们实际运行得到的一次回答：
+
+> 我是来自阿里云的超大规模语言模型，我叫通义千问。
+
+**完成检查：** 你的终端出现 `Answer:` 和一段非空文字，随后回到命令提示符。回答不必与这里逐字一致。
+
+这个脚本每次只处理一个问题，然后退出。想再问一次，就再运行一次。
+
+<a id="second-run"></a>
+
+## 06 · 只换一个问题
+
+仍然在同一个目录、同一个虚拟环境里，执行同一条命令：
+
+```sh
+python example_infer.py
+```
+
+这次在 `Prompt:` 后输入：
+
+```text
+用一句话介绍猫。
+```
+
+模型和生成设置都不改。我们实际得到的回答是：
+
+> 猫，以其优雅的外表、温顺的性格和多才多艺的生活方式，成为了许多人喜爱的宠物之一。
+
+对照两次结果：内容有没有跟着问题改变？有没有遵循“一句话”的要求？接着可以换一个你自己感兴趣的问题。
+
+**这次实验完成的标志：同一个模型，两个输入，两次实际回答。**
+
+<a id="code"></a>
+
+## 07 · 再看刚才运行的脚本
+
+现在打开实验包里的 `example_infer.py`。你已经运行过它了，只需要沿着问题走一遍下面三步。
+
+1. **加载。** `AutoTokenizer.from_pretrained` 读取分词器，`AutoModelForCausalLM.from_pretrained` 加载模型。
+2. **整理输入。** `apply_chat_template` 把问题按模型的对话格式整理成输入。
+3. **生成并还原文字。** `model.generate` 生成新的编号；脚本去掉输入部分，再用 `tokenizer.decode` 转回文字。
+
+本集不修改这些代码。先记住这条顺序：**问题 → 模型输入 → 生成结果 → 文字回答。**
+
+这里使用 CPU、float32，关闭采样，最多生成 64 个新 token。每次运行都会重新加载模型。这次验证的是流程，不比较性能，也不保证两台电脑的输出逐字相同。
+
+<a id="help"></a>
+
+## 卡住时，从这里检查
+
+| 看到的情况 | 下一步 |
+| --- | --- |
+| `python3.12: command not found` | 回到“先确认 Python 能用”，安装并确认版本后再继续。 |
+| `requirements.txt` 或脚本找不到 | 回到“在实验目录打开终端”，确认解压目录和文件名。不要新建空文件来绕过错误。 |
+| `ModuleNotFoundError` | 重新激活 `.venv`，用同一个 `python -m pip` 安装依赖。 |
+| 安装失败，或版本检查失败 | 先确认 `python --version` 是 3.12，并检查网络；不要继续运行模型来跳过安装错误。 |
+| 模型下载失败 | 检查能否访问模型页面，再运行同一条命令；已有缓存通常可以复用。 |
+| 一直显示加载或下载进度 | 首次下载和 CPU 推理可能需要等待；没有报错时先让当前进程完成。 |
+| 内存不足 | 关闭其他占用内存的程序后重试。 |
+| 新开终端后命令失效 | 重新进入 `mini-lab-01`，执行 `source .venv/bin/activate`。 |
+
+如果需要反馈问题，保留操作系统、Python 版本、执行的命令和完整报错；在 [仓库的 Issues](https://github.com/newbdez33/mini-inference-lab/issues) 中描述卡在哪一步。
+
+<a id="other-systems"></a>
+
+## Windows 与 Linux
+
+主流程实际验证于 macOS、Apple Silicon、Python 3.12、CPU。下面提供其他系统的对应命令，**尚未在这次制作中实测**。Intel Mac 不在本篇已验证的环境范围内。
+
+<details markdown="1">
+<summary>Windows · PowerShell</summary>
+
+先安装 Python 3.12，并确认启动器能找到它：
+
+```powershell
+py -3.12 --version
+```
+
+若命令不存在或提示未找到 3.12，先按 [Python 官方 Windows 说明](https://docs.python.org/3.12/using/windows.html)配置解释器，不要跳过检查。
+
+解压实验包后，在 PowerShell 进入实际目录。默认下载目录示例：
+
+```powershell
+cd "$HOME\Downloads\mini-lab-01"
+Get-ChildItem README.md, example_infer.py, requirements.txt
+```
+
+创建环境并直接调用其中的 Python，无需修改 PowerShell 的执行策略：
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe example_infer.py
+```
+
+看到 `Prompt:` 后输入问题。第二次运行仍然使用最后一条命令。
+
+</details>
+
+<details markdown="1">
+<summary>Linux · shell</summary>
+
+先配置 Python 3.12 及其 `venv` 支持，并确认：
+
+```sh
+python3.12 --version
+```
+
+具体安装方式取决于发行版。先按 [Python 官方 Unix 说明](https://docs.python.org/3.12/using/unix.html)和发行版文档完成这一步。
+
+进入实际解压出的 `mini-lab-01` 目录，再执行：
+
+```sh
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r requirements.txt
+python example_infer.py
+```
+
+单独安装 CPU 版本的 PyTorch 后，再安装剩余依赖。第二次提问仍运行 `python example_infer.py`。
+
+</details>
+
+<a id="references"></a>
+
+## 本次实验的依据
+
+模型版本固定为 `7ae557604adf67be50417f59c2c2f167def9a775`。两次完整输入和输出保存在包内的 `terminal-recordings.json`；其中的进程耗时包含导入与加载，不是推理性能基准。
+
+参考：[模型说明](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct)、[Transformers 对话模板](https://huggingface.co/docs/transformers/main/en/chat_templating)、[PyTorch 安装说明](https://pytorch.org/get-started/locally/)。
+
+下一次实验，再拆开看看一句话经过分词器后变成了什么。

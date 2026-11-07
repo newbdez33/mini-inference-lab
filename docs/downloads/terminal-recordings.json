@@ -1,0 +1,38 @@
+{
+  "capturedAt": "2026-11-06T15:17:18.174749+00:00",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "device": "cpu",
+  "dtype": "float32",
+  "doSample": false,
+  "maxNewTokens": 64,
+  "environment": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.12.12",
+    "torch": "2.15.0",
+    "transformers": "5.22.1",
+    "jinja2": "3.1.6"
+  },
+  "timingScope": "Full process, including imports, model loading, and any download. Not an inference benchmark.",
+  "runs": [
+    {
+      "id": "01",
+      "command": "python example_infer.py",
+      "input": "用一句话介绍你自己。",
+      "answer": "我是来自阿里云的超大规模语言模型，我叫通义千问。",
+      "stdout": "Prompt: Loading Qwen/Qwen2.5-0.5B-Instruct on CPU (float32)...\nGenerating...\nAnswer:\n我是来自阿里云的超大规模语言模型，我叫通义千问。\n",
+      "transcript": "$ python example_infer.py\nPrompt: 用一句话介绍你自己。\nLoading Qwen/Qwen2.5-0.5B-Instruct on CPU (float32)...\nGenerating...\nAnswer:\n我是来自阿里云的超大规模语言模型，我叫通义千问。\n",
+      "processSeconds": 17.61
+    },
+    {
+      "id": "02",
+      "command": "python example_infer.py",
+      "input": "用一句话介绍猫。",
+      "answer": "猫，以其优雅的外表、温顺的性格和多才多艺的生活方式，成为了许多人喜爱的宠物之一。",
+      "stdout": "Prompt: Loading Qwen/Qwen2.5-0.5B-Instruct on CPU (float32)...\nGenerating...\nAnswer:\n猫，以其优雅的外表、温顺的性格和多才多艺的生活方式，成为了许多人喜爱的宠物之一。\n",
+      "transcript": "$ python example_infer.py\nPrompt: 用一句话介绍猫。\nLoading Qwen/Qwen2.5-0.5B-Instruct on CPU (float32)...\nGenerating...\nAnswer:\n猫，以其优雅的外表、温顺的性格和多才多艺的生活方式，成为了许多人喜爱的宠物之一。\n",
+      "processSeconds": 3.6
+    }
+  ]
+}
