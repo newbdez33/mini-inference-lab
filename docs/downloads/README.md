@@ -137,6 +137,7 @@ dir
 ```sh
 python -m venv .venv
 source .venv/bin/activate
+python -c "import sys; print(sys.executable)"
 ```
 
 </div>
@@ -147,14 +148,15 @@ source .venv/bin/activate
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+python -c "import sys; print(sys.executable)"
 ```
 
 </div>
 </div>
 
-这会在当前目录创建 `.venv` 文件夹。激活后，提示符前通常会出现 `(.venv)`；后续命令都在这个终端里执行。重新打开终端时，回到实验目录，再执行激活那一行即可。
+这会在当前目录创建 `.venv` 文件夹。**完成检查：** 最后一行打印的 Python 路径应位于当前实验目录的 `.venv` 中。确认后，再在同一个终端安装依赖。重新打开终端时，回到实验目录，再执行激活那一行即可。
 
-安装实验包中列出的依赖：
+安装实验包中列出的依赖。命令中的 `--require-virtualenv` 会在未使用虚拟环境时停止安装：
 
 <div class="platform-commands" markdown="1">
 <div data-platforms="macos" markdown="1">
@@ -162,7 +164,7 @@ python -m venv .venv
 **macOS**
 
 ```sh
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install -r requirements.txt
 ```
 
 </div>
@@ -171,8 +173,8 @@ python -m pip install -r requirements.txt
 **Windows · PowerShell · CPU**
 
 ```powershell
-python -m pip install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
+python -m pip --require-virtualenv install -r requirements.txt
 ```
 
 先安装 CPU 版 PyTorch，再安装其余依赖。
@@ -183,8 +185,8 @@ python -m pip install -r requirements.txt
 **Linux · CPU**
 
 ```sh
-python -m pip install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
+python -m pip --require-virtualenv install -r requirements.txt
 ```
 
 先安装 CPU 版 PyTorch，再安装其余依赖。
@@ -196,8 +198,8 @@ python -m pip install -r requirements.txt
 
 ```powershell
 nvidia-smi
-python -m pip install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
+python -m pip --require-virtualenv install -r requirements.txt
 ```
 
 先确认第一条命令能显示 NVIDIA 显卡和驱动信息，再安装 CUDA 版 PyTorch。更换 CPU／GPU 选项后，需要重新执行对应的安装命令。
@@ -209,8 +211,8 @@ python -m pip install -r requirements.txt
 
 ```sh
 nvidia-smi
-python -m pip install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
+python -m pip --require-virtualenv install -r requirements.txt
 ```
 
 先确认第一条命令能显示 NVIDIA 显卡和驱动信息，再安装 CUDA 版 PyTorch。更换 CPU／GPU 选项后，需要重新执行对应的安装命令。
@@ -416,6 +418,8 @@ CPU 和 GPU 路径都使用 float32，关闭采样，最多生成 64 个新 toke
 | 找不到 `python` 命令 | 回到“先确认 Python 能用”，确认安装和命令搜索路径，再检查版本。 |
 | `requirements.txt` 或脚本找不到 | 回到“在实验目录打开终端”，确认解压目录和文件名。不要新建空文件来绕过错误。 |
 | `ModuleNotFoundError` | 回到“安装实验依赖”，确认顶部选对系统和运行设备，再用同一个 `python -m pip` 安装依赖。 |
+| `Could not find an activated virtualenv` | 回到“安装实验依赖”，激活 `.venv` 并检查 Python 路径，再安装。 |
+| `dependency conflicts`，出现本实验未使用的软件包 | 检查是否误装进原有环境。回到实验目录，使用独立的 `.venv`；原环境中已发生的版本变更需要单独处理。 |
 | 安装失败，或版本检查失败 | 先确认 Python 版本符合上方要求，再检查网络和完整报错。 |
 | 模型下载失败 | 检查能否访问模型页面，再运行同一条命令；已有缓存通常可以复用。 |
 | 一直显示加载或下载进度 | 首次下载和推理可能需要等待；没有报错时先让当前进程完成。 |

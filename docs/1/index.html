@@ -168,50 +168,52 @@ dir
 <p><strong>macOS · Linux</strong></p>
 <pre><code class="language-sh">python -m venv .venv
 source .venv/bin/activate
+python -c &quot;import sys; print(sys.executable)&quot;
 </code></pre>
 </div>
 <div data-platforms="windows">
 <p><strong>Windows · PowerShell</strong></p>
 <pre><code class="language-powershell">python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+python -c &quot;import sys; print(sys.executable)&quot;
 </code></pre>
 </div>
 </div>
-<p>这会在当前目录创建 <code>.venv</code> 文件夹。激活后，提示符前通常会出现 <code>(.venv)</code>；后续命令都在这个终端里执行。重新打开终端时，回到实验目录，再执行激活那一行即可。</p>
-<p>安装实验包中列出的依赖：</p>
+<p>这会在当前目录创建 <code>.venv</code> 文件夹。<strong>完成检查：</strong> 最后一行打印的 Python 路径应位于当前实验目录的 <code>.venv</code> 中。确认后，再在同一个终端安装依赖。重新打开终端时，回到实验目录，再执行激活那一行即可。</p>
+<p>安装实验包中列出的依赖。命令中的 <code>--require-virtualenv</code> 会在未使用虚拟环境时停止安装：</p>
 <div class="platform-commands">
 <div data-platforms="macos">
 <p><strong>macOS</strong></p>
-<pre><code class="language-sh">python -m pip install -r requirements.txt
+<pre><code class="language-sh">python -m pip --require-virtualenv install -r requirements.txt
 </code></pre>
 </div>
 <div data-devices="cpu" data-platforms="windows">
 <p><strong>Windows · PowerShell · CPU</strong></p>
-<pre><code class="language-powershell">python -m pip install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
-python -m pip install -r requirements.txt
+<pre><code class="language-powershell">python -m pip --require-virtualenv install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
+python -m pip --require-virtualenv install -r requirements.txt
 </code></pre>
 <p>先安装 CPU 版 PyTorch，再安装其余依赖。</p>
 </div>
 <div data-devices="cpu" data-platforms="linux">
 <p><strong>Linux · CPU</strong></p>
-<pre><code class="language-sh">python -m pip install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
-python -m pip install -r requirements.txt
+<pre><code class="language-sh">python -m pip --require-virtualenv install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
+python -m pip --require-virtualenv install -r requirements.txt
 </code></pre>
 <p>先安装 CPU 版 PyTorch，再安装其余依赖。</p>
 </div>
 <div data-devices="cuda" data-platforms="windows">
 <p><strong>Windows · PowerShell · NVIDIA GPU</strong></p>
 <pre><code class="language-powershell">nvidia-smi
-python -m pip install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
+python -m pip --require-virtualenv install -r requirements.txt
 </code></pre>
 <p>先确认第一条命令能显示 NVIDIA 显卡和驱动信息，再安装 CUDA 版 PyTorch。更换 CPU／GPU 选项后，需要重新执行对应的安装命令。</p>
 </div>
 <div data-devices="cuda" data-platforms="linux">
 <p><strong>Linux · NVIDIA GPU</strong></p>
 <pre><code class="language-sh">nvidia-smi
-python -m pip install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
-python -m pip install -r requirements.txt
+python -m pip --require-virtualenv install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
+python -m pip --require-virtualenv install -r requirements.txt
 </code></pre>
 <p>先确认第一条命令能显示 NVIDIA 显卡和驱动信息，再安装 CUDA 版 PyTorch。更换 CPU／GPU 选项后，需要重新执行对应的安装命令。</p>
 </div>
@@ -347,6 +349,14 @@ python -c &quot;import torch; print('CUDA:', torch.cuda.is_available()); print(t
 <tr>
 <td><code>ModuleNotFoundError</code></td>
 <td>回到“安装实验依赖”，确认顶部选对系统和运行设备，再用同一个 <code>python -m pip</code> 安装依赖。</td>
+</tr>
+<tr>
+<td><code>Could not find an activated virtualenv</code></td>
+<td>回到“安装实验依赖”，激活 <code>.venv</code> 并检查 Python 路径，再安装。</td>
+</tr>
+<tr>
+<td><code>dependency conflicts</code>，出现本实验未使用的软件包</td>
+<td>检查是否误装进原有环境。回到实验目录，使用独立的 <code>.venv</code>；原环境中已发生的版本变更需要单独处理。</td>
 </tr>
 <tr>
 <td>安装失败，或版本检查失败</td>
