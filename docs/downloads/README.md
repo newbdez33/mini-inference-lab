@@ -127,6 +127,33 @@ dir
 
 ## 04 · 安装实验依赖
 
+先在当前实验目录创建并激活虚拟环境：
+
+<div class="platform-commands" markdown="1">
+<div data-platforms="macos linux" markdown="1">
+
+**macOS · Linux**
+
+```sh
+python -m venv .venv
+source .venv/bin/activate
+```
+
+</div>
+<div data-platforms="windows" markdown="1">
+
+**Windows · PowerShell**
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+</div>
+</div>
+
+这会在当前目录创建 `.venv` 文件夹。激活后，提示符前通常会出现 `(.venv)`；后续命令都在这个终端里执行。重新打开终端时，回到实验目录，再执行激活那一行即可。
+
 安装实验包中列出的依赖：
 
 <div class="platform-commands" markdown="1">

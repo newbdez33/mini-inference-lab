@@ -162,6 +162,22 @@ dir
 <p><strong>完成检查：</strong> 两个文件名都能列出，没有文件或路径不存在的报错。后面所有命令都在这个终端、这个目录里执行。</p>
 <p><a id="environment"></a></p>
 <h2 id="04">04 · 安装实验依赖</h2>
+<p>先在当前实验目录创建并激活虚拟环境：</p>
+<div class="platform-commands">
+<div data-platforms="macos linux">
+<p><strong>macOS · Linux</strong></p>
+<pre><code class="language-sh">python -m venv .venv
+source .venv/bin/activate
+</code></pre>
+</div>
+<div data-platforms="windows">
+<p><strong>Windows · PowerShell</strong></p>
+<pre><code class="language-powershell">python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+</code></pre>
+</div>
+</div>
+<p>这会在当前目录创建 <code>.venv</code> 文件夹。激活后，提示符前通常会出现 <code>(.venv)</code>；后续命令都在这个终端里执行。重新打开终端时，回到实验目录，再执行激活那一行即可。</p>
 <p>安装实验包中列出的依赖：</p>
 <div class="platform-commands">
 <div data-platforms="macos">
