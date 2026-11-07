@@ -16,20 +16,16 @@
 
 ```text
 mini-lab-01/
-├── README.md
 ├── example_infer.py
-├── requirements.txt
-└── terminal-recordings.json
+└── requirements.txt
 ```
 
 | 文件 | 你会用它做什么 |
 | --- | --- |
-| `README.md` | 当前这份操作说明，下载后也可以阅读。 |
 | `example_infer.py` | 已写好的完整推理脚本，稍后直接运行。 |
 | `requirements.txt` | 随实验包提供的依赖清单，用来安装指定版本的库。 |
-| `terminal-recordings.json` | 本次实验保存的两个实际输入和回答，用来对照。 |
 
-**完成检查：** 打开解压后的文件夹，能看到上面四个文件。
+**完成检查：** 打开解压后的文件夹，能看到上面两个文件。操作说明和示例回答直接看本页。
 
 <a id="python"></a>
 
@@ -84,7 +80,7 @@ py -3 --version
 
 ```sh
 cd "$HOME/Downloads/mini-lab-01"
-ls README.md example_infer.py requirements.txt
+ls example_infer.py requirements.txt
 ```
 
 </div>
@@ -94,13 +90,13 @@ ls README.md example_infer.py requirements.txt
 
 ```powershell
 cd "$HOME\Downloads\mini-lab-01"
-Get-ChildItem README.md, example_infer.py, requirements.txt
+Get-ChildItem example_infer.py, requirements.txt
 ```
 
 </div>
 </div>
 
-**完成检查：** 三个文件名都能列出，没有文件或路径不存在的报错。后面所有命令都在这个终端、这个目录里执行。
+**完成检查：** 两个文件名都能列出，没有文件或路径不存在的报错。后面所有命令都在这个终端、这个目录里执行。
 
 <a id="environment"></a>
 
@@ -345,7 +341,7 @@ python example_infer.py
 
 示例输出采集于 macOS、Apple Silicon、Python 3.12、CPU；本篇流程另用本机默认的 Python 3.14 验证通过。Windows、Linux 和 Intel Mac 尚未在本次实验中实测。Python 最低版本要求来自固定依赖的发布说明：[PyTorch](https://pypi.org/project/torch/2.15.0/)、[Transformers](https://pypi.org/project/transformers/5.22.1/)。
 
-模型版本固定为 `7ae557604adf67be50417f59c2c2f167def9a775`。两次完整输入和输出保存在包内的 `terminal-recordings.json`；其中的进程耗时包含导入与加载，不是推理性能基准。
+模型版本固定为 `7ae557604adf67be50417f59c2c2f167def9a775`。两次完整输入、输出及环境信息保存在仓库的[实际运行记录](https://github.com/newbdez33/mini-inference-lab/blob/main/episode-01/terminal-recordings.json)中，无需下载或运行该文件。其中的进程耗时包含导入与加载，不是推理性能基准。
 
 参考：[模型说明](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct)、[Transformers 对话模板](https://huggingface.co/docs/transformers/main/en/chat_templating)、[PyTorch 安装说明](https://pytorch.org/get-started/locally/)。
 

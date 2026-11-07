@@ -75,10 +75,8 @@
 <p><a href="../downloads/mini-lab-01.zip">下载 mini-lab-01.zip</a></p>
 <p>下载完成后，双击 ZIP 解压。包内已经有 <code>mini-lab-01</code> 文件夹，<strong>不用自己新建目录，也不用自己写脚本或依赖清单</strong>。</p>
 <pre><code class="language-text">mini-lab-01/
-├── README.md
 ├── example_infer.py
-├── requirements.txt
-└── terminal-recordings.json
+└── requirements.txt
 </code></pre>
 <table>
 <thead>
@@ -89,10 +87,6 @@
 </thead>
 <tbody>
 <tr>
-<td><code>README.md</code></td>
-<td>当前这份操作说明，下载后也可以阅读。</td>
-</tr>
-<tr>
 <td><code>example_infer.py</code></td>
 <td>已写好的完整推理脚本，稍后直接运行。</td>
 </tr>
@@ -100,13 +94,9 @@
 <td><code>requirements.txt</code></td>
 <td>随实验包提供的依赖清单，用来安装指定版本的库。</td>
 </tr>
-<tr>
-<td><code>terminal-recordings.json</code></td>
-<td>本次实验保存的两个实际输入和回答，用来对照。</td>
-</tr>
 </tbody>
 </table>
-<p><strong>完成检查：</strong> 打开解压后的文件夹，能看到上面四个文件。</p>
+<p><strong>完成检查：</strong> 打开解压后的文件夹，能看到上面两个文件。操作说明和示例回答直接看本页。</p>
 <p><a id="python"></a></p>
 <h2 id="02-python">02 · 先确认 Python 能用</h2>
 <p>打开终端，选择自己的系统，运行：</p>
@@ -139,17 +129,17 @@
 <div data-platforms="macos linux">
 <p><strong>macOS · Linux</strong></p>
 <pre><code class="language-sh">cd &quot;$HOME/Downloads/mini-lab-01&quot;
-ls README.md example_infer.py requirements.txt
+ls example_infer.py requirements.txt
 </code></pre>
 </div>
 <div data-platforms="windows">
 <p><strong>Windows · PowerShell</strong></p>
 <pre><code class="language-powershell">cd &quot;$HOME\Downloads\mini-lab-01&quot;
-Get-ChildItem README.md, example_infer.py, requirements.txt
+Get-ChildItem example_infer.py, requirements.txt
 </code></pre>
 </div>
 </div>
-<p><strong>完成检查：</strong> 三个文件名都能列出，没有文件或路径不存在的报错。后面所有命令都在这个终端、这个目录里执行。</p>
+<p><strong>完成检查：</strong> 两个文件名都能列出，没有文件或路径不存在的报错。后面所有命令都在这个终端、这个目录里执行。</p>
 <p><a id="environment"></a></p>
 <h2 id="04">04 · 准备实验环境</h2>
 <p>先给这个实验创建一个单独的 Python 环境：</p>
@@ -326,7 +316,7 @@ python -m pip install -r requirements.txt
 <a id="references"></a></p>
 <h2 id="_2">本次实验的依据</h2>
 <p>示例输出采集于 macOS、Apple Silicon、Python 3.12、CPU；本篇流程另用本机默认的 Python 3.14 验证通过。Windows、Linux 和 Intel Mac 尚未在本次实验中实测。Python 最低版本要求来自固定依赖的发布说明：<a href="https://pypi.org/project/torch/2.15.0/">PyTorch</a>、<a href="https://pypi.org/project/transformers/5.22.1/">Transformers</a>。</p>
-<p>模型版本固定为 <code>7ae557604adf67be50417f59c2c2f167def9a775</code>。两次完整输入和输出保存在包内的 <code>terminal-recordings.json</code>；其中的进程耗时包含导入与加载，不是推理性能基准。</p>
+<p>模型版本固定为 <code>7ae557604adf67be50417f59c2c2f167def9a775</code>。两次完整输入、输出及环境信息保存在仓库的<a href="https://github.com/newbdez33/mini-inference-lab/blob/main/episode-01/terminal-recordings.json">实际运行记录</a>中，无需下载或运行该文件。其中的进程耗时包含导入与加载，不是推理性能基准。</p>
 <p>参考：<a href="https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct">模型说明</a>、<a href="https://huggingface.co/docs/transformers/main/en/chat_templating">Transformers 对话模板</a>、<a href="https://pytorch.org/get-started/locally/">PyTorch 安装说明</a>。</p>
 <p>下一次实验，再拆开看看一句话经过分词器后变成了什么。</p></article>
     </div>

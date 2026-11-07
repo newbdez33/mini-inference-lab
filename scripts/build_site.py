@@ -15,7 +15,8 @@ import markdown
 ROOT = Path(__file__).resolve().parents[1]
 EPISODE = ROOT / "episode-01"
 SITE = ROOT / "docs"
-PACKAGE_FILES = ("README.md", "example_infer.py", "requirements.txt", "terminal-recordings.json")
+PACKAGE_FILES = ("example_infer.py", "requirements.txt")
+DOWNLOAD_FILES = (*PACKAGE_FILES, "README.md", "terminal-recordings.json")
 DOWNLOAD_URL = "https://github.com/newbdez33/mini-inference-lab/raw/refs/heads/main/packages/mini-lab-01.zip"
 
 
@@ -73,7 +74,7 @@ def main() -> None:
     downloads = SITE / "downloads"
     downloads.mkdir(exist_ok=True)
     shutil.copy2(package, downloads / package.name)
-    for name in PACKAGE_FILES:
+    for name in DOWNLOAD_FILES:
         shutil.copy2(EPISODE / name, downloads / name)
     digest = hashlib.sha256(package.read_bytes()).hexdigest()
     (downloads / "SHA256SUMS").write_text(f"{digest}  {package.name}\n")
