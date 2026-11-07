@@ -4,7 +4,7 @@
 
 **预计用时：10–15 分钟。** 包括阅读步骤和动手操作；首次安装 Python、安装依赖及下载模型的等待时间另计。
 
-**本篇主流程：macOS（Apple Silicon / M 系列）· Python 3.12 · CPU。无需独立显卡。** 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。Windows 和 Linux 的对应命令放在文末。
+**本篇使用 Python 和 CPU，无需独立显卡。** 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。命令块可以切换 macOS、Windows 和 Linux；切换一处，整页同步。Windows 请使用 PowerShell，macOS 和 Linux 使用终端。
 
 <a id="download"></a>
 
@@ -35,27 +35,39 @@ mini-lab-01/
 
 ## 02 · 先确认 Python 能用
 
-打开 macOS 的“终端”应用，运行：
+打开终端，选择自己的系统，运行：
+
+<div class="platform-commands" markdown="1">
+<div data-platforms="macos linux" markdown="1">
+
+**macOS · Linux**
 
 ```sh
-python3.12 --version
+python3 --version
 ```
 
-看到 `Python 3.12.x` 就可以继续，末尾的补丁版本可以不同。这里是在检查电脑上已有的工具，还没有进入实验目录。
+</div>
+<div data-platforms="windows" markdown="1">
+
+**Windows · PowerShell**
+
+```powershell
+py -3 --version
+```
+
+</div>
+</div>
+
+本实验需要 **Python 3.11 或更新版本**。版本符合就可以继续，无需特地更换已有环境。这里是在检查电脑上已有的工具，还没有进入实验目录。
 
 <details markdown="1">
-<summary>找不到 python3.12？先安装，再继续</summary>
+<summary>找不到 Python，或版本太旧？</summary>
 
-如果已经有 Homebrew，执行下面的命令。没有 Homebrew 时，先按 [Homebrew 官方安装说明](https://docs.brew.sh/Installation)安装，并完成安装器显示的 shell 配置步骤，然后重新打开终端。
+- **macOS：** 已有 Homebrew 时，可以执行 `brew install python`。没有 Homebrew 时，先按 [Homebrew 官方安装说明](https://docs.brew.sh/Installation)安装并完成 shell 配置，再重新打开终端。
+- **Windows：** 按 [Python 官方 Windows 说明](https://docs.python.org/3/using/windows.html)安装 Python，然后重新打开 PowerShell。
+- **Linux：** 按 [Python 官方 Unix 说明](https://docs.python.org/3/using/unix.html)和发行版文档安装 Python 及其 `venv` 支持。
 
-```sh
-brew install python@3.12
-python3.12 --version
-```
-
-这是 [Homebrew 的 Python 3.12 安装方式](https://formulae.brew.sh/formula/python@3.12)。**确认版本检查成功后，再执行后面的环境命令。** 不要因为系统里能运行 `python3`，就默认它一定是 3.12。
-
-如果使用其他 Python 管理工具，也可以使用其 Python 3.12 解释器；本篇命令统一写作 `python3.12`。
+也可以使用自己熟悉的 Python 管理工具。**重新运行上面的版本检查，确认符合要求后再继续。**
 
 </details>
 
@@ -63,21 +75,32 @@ python3.12 --version
 
 ## 03 · 在实验目录打开终端
 
-如果 ZIP 下载并解压在默认的“下载”目录，执行：
+如果 ZIP 下载并解压在默认的“下载”目录，执行下面的命令。解压在其他位置时，把第一行的目录替换成实际路径。
+
+<div class="platform-commands" markdown="1">
+<div data-platforms="macos linux" markdown="1">
+
+**macOS · Linux**
 
 ```sh
 cd "$HOME/Downloads/mini-lab-01"
-```
-
-如果你解压在其他位置，在终端输入 `cd `（末尾留一个空格），把解压后的 `mini-lab-01` 文件夹拖进终端，再按回车。
-
-确认当前目录里确实有这三个文件：
-
-```sh
 ls README.md example_infer.py requirements.txt
 ```
 
-**完成检查：** 三个文件名都能列出，没有 `No such file or directory`。后面所有命令都在这个终端、这个目录里执行。
+</div>
+<div data-platforms="windows" markdown="1">
+
+**Windows · PowerShell**
+
+```powershell
+cd "$HOME\Downloads\mini-lab-01"
+Get-ChildItem README.md, example_infer.py, requirements.txt
+```
+
+</div>
+</div>
+
+**完成检查：** 三个文件名都能列出，没有文件或路径不存在的报错。后面所有命令都在这个终端、这个目录里执行。
 
 <a id="environment"></a>
 
@@ -85,30 +108,114 @@ ls README.md example_infer.py requirements.txt
 
 先给这个实验创建一个单独的 Python 环境：
 
+<div class="platform-commands" markdown="1">
+<div data-platforms="macos linux" markdown="1">
+
+**macOS · Linux**
+
 ```sh
-python3.12 -m venv .venv
+python3 -m venv .venv
 ```
 
-激活它，再确认一次 Python 版本：
+</div>
+<div data-platforms="windows" markdown="1">
+
+**Windows · PowerShell**
+
+```powershell
+py -3 -m venv .venv
+```
+
+</div>
+</div>
+
+接下来使用这个环境：
+
+<div class="platform-commands" markdown="1">
+<div data-platforms="macos linux" markdown="1">
+
+**macOS · Linux**
 
 ```sh
 source .venv/bin/activate
-python --version
 ```
 
-现在应显示 `Python 3.12.x`。终端提示符通常也会多出 `(.venv)`。
+激活后，后续的 `python` 会使用这个环境。终端提示符通常会多出 `(.venv)`。
+
+</div>
+<div data-platforms="windows" markdown="1">
+
+**Windows · PowerShell**
+
+```powershell
+.\.venv\Scripts\python.exe --version
+```
+
+Windows 直接调用环境里的 Python，无需激活或修改 PowerShell 的执行策略。
+
+</div>
+</div>
 
 安装实验包中列出的依赖：
+
+<div class="platform-commands" markdown="1">
+<div data-platforms="macos" markdown="1">
+
+**macOS**
 
 ```sh
 python -m pip install -r requirements.txt
 ```
 
+</div>
+<div data-platforms="windows" markdown="1">
+
+**Windows · PowerShell**
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+先安装 CPU 版 PyTorch，再安装其余依赖。
+
+</div>
+<div data-platforms="linux" markdown="1">
+
+**Linux**
+
+```sh
+python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r requirements.txt
+```
+
+先安装 CPU 版 PyTorch，再安装其余依赖。
+
+</div>
+</div>
+
 等安装结束、终端重新出现提示符后，再检查两个主要库：
+
+<div class="platform-commands" markdown="1">
+<div data-platforms="macos linux" markdown="1">
+
+**macOS · Linux**
 
 ```sh
 python -c "import torch, transformers; print(torch.__version__); print(transformers.__version__)"
 ```
+
+</div>
+<div data-platforms="windows" markdown="1">
+
+**Windows · PowerShell**
+
+```powershell
+.\.venv\Scripts\python.exe -c "import torch, transformers; print(torch.__version__); print(transformers.__version__)"
+```
+
+</div>
+</div>
 
 **完成检查：** 能打印 PyTorch 和 Transformers 的版本号，没有导入错误。实验包固定使用 PyTorch 2.15.0、Transformers 5.22.1 和 Jinja2 3.1.6。
 
@@ -120,9 +227,26 @@ python -c "import torch, transformers; print(torch.__version__); print(transform
 
 运行刚才下载的完整脚本：
 
+<div class="platform-commands" markdown="1">
+<div data-platforms="macos linux" markdown="1">
+
+**macOS · Linux**
+
 ```sh
 python example_infer.py
 ```
+
+</div>
+<div data-platforms="windows" markdown="1">
+
+**Windows · PowerShell**
+
+```powershell
+.\.venv\Scripts\python.exe example_infer.py
+```
+
+</div>
+</div>
 
 看到 `Prompt:` 后，输入下面这句话，再按回车：
 
@@ -146,11 +270,28 @@ python example_infer.py
 
 ## 06 · 只换一个问题
 
-仍然在同一个目录、同一个虚拟环境里，执行同一条命令：
+仍然在同一个终端、同一个目录里，执行同一条命令：
+
+<div class="platform-commands" markdown="1">
+<div data-platforms="macos linux" markdown="1">
+
+**macOS · Linux**
 
 ```sh
 python example_infer.py
 ```
+
+</div>
+<div data-platforms="windows" markdown="1">
+
+**Windows · PowerShell**
+
+```powershell
+.\.venv\Scripts\python.exe example_infer.py
+```
+
+</div>
+</div>
 
 这次在 `Prompt:` 后输入：
 
@@ -186,82 +327,23 @@ python example_infer.py
 
 | 看到的情况 | 下一步 |
 | --- | --- |
-| `python3.12: command not found` | 回到“先确认 Python 能用”，安装并确认版本后再继续。 |
+| 找不到 `python3` 或 `py` 命令 | 回到“先确认 Python 能用”，安装并确认版本后再继续。 |
 | `requirements.txt` 或脚本找不到 | 回到“在实验目录打开终端”，确认解压目录和文件名。不要新建空文件来绕过错误。 |
-| `ModuleNotFoundError` | 重新激活 `.venv`，用同一个 `python -m pip` 安装依赖。 |
-| 安装失败，或版本检查失败 | 先确认 `python --version` 是 3.12，并检查网络；不要继续运行模型来跳过安装错误。 |
+| `ModuleNotFoundError` | 回到“准备实验环境”，按当前系统的标签重新安装依赖，确保安装和运行使用同一个环境。 |
+| 安装失败，或版本检查失败 | 先确认使用的是 `.venv` 中的 Python、版本符合上方要求，再检查网络和完整报错。 |
 | 模型下载失败 | 检查能否访问模型页面，再运行同一条命令；已有缓存通常可以复用。 |
 | 一直显示加载或下载进度 | 首次下载和 CPU 推理可能需要等待；没有报错时先让当前进程完成。 |
 | 内存不足 | 关闭其他占用内存的程序后重试。 |
-| 新开终端后命令失效 | 重新进入 `mini-lab-01`，执行 `source .venv/bin/activate`。 |
+| 新开终端后命令失效 | 重新进入 `mini-lab-01`，再按“准备实验环境”中的步骤使用已有环境。 |
 
 如果需要反馈问题，保留操作系统、Python 版本、执行的命令和完整报错；在 [仓库的 Issues](https://github.com/newbdez33/mini-inference-lab/issues) 中描述卡在哪一步。
 
 <a id="other-systems"></a>
-
-## Windows 与 Linux
-
-主流程实际验证于 macOS、Apple Silicon、Python 3.12、CPU。下面提供其他系统的对应命令，**尚未在这次制作中实测**。Intel Mac 不在本篇已验证的环境范围内。
-
-<details markdown="1">
-<summary>Windows · PowerShell</summary>
-
-先安装 Python 3.12，并确认启动器能找到它：
-
-```powershell
-py -3.12 --version
-```
-
-若命令不存在或提示未找到 3.12，先按 [Python 官方 Windows 说明](https://docs.python.org/3.12/using/windows.html)配置解释器，不要跳过检查。
-
-解压实验包后，在 PowerShell 进入实际目录。默认下载目录示例：
-
-```powershell
-cd "$HOME\Downloads\mini-lab-01"
-Get-ChildItem README.md, example_infer.py, requirements.txt
-```
-
-创建环境并直接调用其中的 Python，无需修改 PowerShell 的执行策略：
-
-```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe example_infer.py
-```
-
-看到 `Prompt:` 后输入问题。第二次运行仍然使用最后一条命令。
-
-</details>
-
-<details markdown="1">
-<summary>Linux · shell</summary>
-
-先配置 Python 3.12 及其 `venv` 支持，并确认：
-
-```sh
-python3.12 --version
-```
-
-具体安装方式取决于发行版。先按 [Python 官方 Unix 说明](https://docs.python.org/3.12/using/unix.html)和发行版文档完成这一步。
-
-进入实际解压出的 `mini-lab-01` 目录，再执行：
-
-```sh
-python3.12 -m venv .venv
-source .venv/bin/activate
-python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
-python -m pip install -r requirements.txt
-python example_infer.py
-```
-
-单独安装 CPU 版本的 PyTorch 后，再安装剩余依赖。第二次提问仍运行 `python example_infer.py`。
-
-</details>
-
 <a id="references"></a>
 
 ## 本次实验的依据
+
+示例输出采集于 macOS、Apple Silicon、Python 3.12、CPU；本篇流程另用本机默认的 Python 3.14 验证通过。Windows、Linux 和 Intel Mac 尚未在本次实验中实测。Python 最低版本要求来自固定依赖的发布说明：[PyTorch](https://pypi.org/project/torch/2.15.0/)、[Transformers](https://pypi.org/project/transformers/5.22.1/)。
 
 模型版本固定为 `7ae557604adf67be50417f59c2c2f167def9a775`。两次完整输入和输出保存在包内的 `terminal-recordings.json`；其中的进程耗时包含导入与加载，不是推理性能基准。
 

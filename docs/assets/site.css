@@ -142,6 +142,13 @@ h1, h2, h3, p { margin-top: 0; }
 .lesson-hero .eyebrow { color: var(--pink); margin-bottom: 16px; }
 .lesson-hero h1 { font-family: "Noto Sans SC", var(--font-sans); font-size: clamp(32px, 3.3vw, 44px); font-weight: 400; line-height: 1.5; letter-spacing: -.8px; margin: 0; text-wrap: balance; }
 .hero-description { color: var(--muted); font-size: 16px; line-height: 1.9; margin: 20px 0; }
+.platform-switcher { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 20px 0; }
+.platform-switcher[hidden] { display: none; }
+.platform-switcher > span { color: var(--muted); font-size: 14px; }
+.platform-options { display: inline-flex; gap: 3px; padding: 4px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface-inset); }
+.platform-options button { border: 0; border-radius: 5px; background: transparent; color: var(--muted); padding: 7px 12px; min-height: 36px; font: 500 14px/1.5 var(--font-sans); }
+.platform-options button[aria-checked="true"] { color: var(--accent); background: var(--soft); box-shadow: inset 0 0 0 1px var(--feature-border); }
+.platform-options button:hover { color: var(--ink); }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 24px; }
 .secondary-link { color: var(--accent); font-size: 14px; text-decoration: none; }
 .lesson-hero .tags { margin: 24px 0 0; }
@@ -172,6 +179,14 @@ pre code.language-text:not(.file-tree) { font: 16px/1.85 var(--font-sans); }
 .code-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px 0 22px; color: var(--muted); font-size: 13px; line-height: 1.7; letter-spacing: .04em; }
 .copy-button { color: var(--accent); background: var(--soft); border: 1px solid var(--feature-border); border-radius: 5px; padding: 5px 10px; font: 500 13px/1.5 var(--font-sans); letter-spacing: 0; min-width: 76px; }
 .copy-button:hover { border-color: var(--accent); }
+.platform-commands.is-tabbed .code-toolbar { padding-left: 14px; gap: 8px; }
+.platform-tabs { display: flex; gap: 3px; min-width: 0; }
+.platform-tabs button { border: 0; border-radius: 5px; padding: 6px 10px; min-height: 36px; color: var(--muted); background: transparent; font: 500 13px/1.5 var(--font-sans); letter-spacing: 0; }
+.platform-tabs button[aria-selected="true"] { color: var(--accent); background: var(--soft); box-shadow: inset 0 -2px var(--accent); }
+.platform-tabs button:hover { color: var(--ink); }
+.platform-commands.is-tabbed .platform-label { display: none; }
+.platform-commands.is-tabbed [role="tabpanel"] > p { margin: 0; padding: 0 22px 18px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+.platform-commands.is-tabbed [role="tabpanel"][hidden] { display: none; }
 .tutorial table { border-collapse: collapse; width: 100%; margin: 24px 0; font-size: 14px; line-height: 1.85; }
 .tutorial th, .tutorial td { border-bottom: 1px solid var(--line); padding: 14px; text-align: left; vertical-align: top; }
 .tutorial th { font-weight: 500; background: var(--surface); }
@@ -262,6 +277,8 @@ pre code.language-text:not(.file-tree) { font: 16px/1.85 var(--font-sans); }
   .tutorial details { padding-inline: 14px; }
   .code-toolbar { padding-left: 16px; }
   .code-block pre { padding-inline: 16px; }
+  .platform-tabs button { padding-inline: 6px; }
+  .platform-commands.is-tabbed [role="tabpanel"] > p { padding-inline: 16px; }
   .next-experiment h2 { font-size: 21px; }
   .next-experiment > span { font-size: 44px; }
 }

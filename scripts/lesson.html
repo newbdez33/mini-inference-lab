@@ -30,9 +30,17 @@
         <p class="eyebrow">EXPERIMENT 01 · 基础推理</p>
         <h1 id="page-title">{{TITLE}}<span class="accent">。</span></h1>
         <p class="hero-description">一个小模型，两次提问。<br>先在自己的电脑上跑通，再一起看它怎么工作。</p>
+        <div class="platform-switcher" hidden>
+          <span id="platform-label">实验平台</span>
+          <div class="platform-options" role="radiogroup" aria-labelledby="platform-label">
+            <button type="button" role="radio" data-platform="macos" aria-checked="true">macOS</button>
+            <button type="button" role="radio" data-platform="windows" aria-checked="false" tabindex="-1">Windows</button>
+            <button type="button" role="radio" data-platform="linux" aria-checked="false" tabindex="-1">Linux</button>
+          </div>
+        </div>
         <p class="experiment-time"><strong>预计 10–15 分钟</strong><span>首次安装与下载等待另计</span></p>
         <div class="hero-actions"><a class="button" href="../downloads/mini-lab-01.zip" download>下载实验包 <span aria-hidden="true">↓</span></a><a class="secondary-link" href="#download">一步一步开始 →</a></div>
-        <ul class="tags" aria-label="实验环境"><li>Mac · M 系列</li><li>Python 3.12</li><li>CPU</li></ul>
+        <ul class="tags" aria-label="实验环境"><li>Python</li><li>CPU</li></ul>
       </div>
       <div class="lab-sample lesson-sample" aria-label="本次实验的真实输出示例">
         <div class="sample-label"><span>本次实验 / 输出示例</span><span aria-hidden="true">↙</span></div>

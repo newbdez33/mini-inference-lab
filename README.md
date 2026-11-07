@@ -12,7 +12,7 @@
 
 实验包解压后自带 `mini-lab-01` 文件夹，包含完整脚本、依赖清单、操作说明和实际运行记录。无需自己新建目录或编写 `requirements.txt`。
 
-目前主教程使用 macOS、Apple Silicon、Python 3.12 和 CPU。Windows 与 Linux 的命令放在教程末尾，并标明验证范围。
+教程提供 macOS、Windows 和 Linux 的命令，可以在页面顶部或命令块中切换平台；验证范围在文末说明。
 
 ## 更新教程
 
