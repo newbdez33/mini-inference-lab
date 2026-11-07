@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f6ef">
   <meta name="description" content="Mini 的第一个模型推理实验：下载实验包，准备 Python，在 CPU 上运行小模型，再换一个问题。">
-  <title>让模型介绍自己 · Mini 的模型推理工程师之路</title>
+  <title>跑通第一次模型推理 · Mini 的模型推理工程师之路</title>
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/site.css?v=3a48f8fc6dbc">
   <script src="../assets/site.js" defer></script>
@@ -20,8 +20,8 @@
   <main>
     <nav class="breadcrumb" aria-label="课程位置"><a href="../">课程目录</a><span aria-hidden="true">/</span><span aria-current="page">实验 01</span></nav>
     <section class="hero" aria-labelledby="page-title">
-      <div class="hero-copy"><p class="eyebrow">EXPERIMENT 01 <span>／</span> 从这里开始</p><h1 id="page-title">让模型介绍自己<span>。</span></h1><p class="hero-description">一个小模型，两次提问。<br>先在自己的电脑上跑通，再一起看它怎么工作。</p><div class="hero-actions"><a class="primary-button" href="../downloads/mini-lab-01.zip" download>下载实验包 <span>↓</span></a><a class="secondary-link" href="#download">一步一步开始 →</a></div><p class="hero-meta">Mac（M 系列）<span>·</span> Python 3.12 <span>·</span> CPU 即可</p></div>
-      <div class="hero-terminal" aria-label="本次实验的真实输出示例"><div class="terminal-bar"><span class="terminal-dots">● ● ●</span><span>LOCAL EXPERIMENT</span></div><div class="terminal-content"><p class="terminal-prompt">Prompt</p><p class="terminal-question">用一句话介绍你自己。</p><div class="terminal-divider"></div><p class="terminal-prompt">Answer</p><p class="terminal-answer">我是来自阿里云的超大规模语言模型，我叫通义千问。</p><p class="terminal-caption">来自本次 CPU 实验的实际回答</p></div></div>
+      <div class="hero-copy"><p class="eyebrow">EXPERIMENT 01 <span>／</span> 从这里开始</p><h1 id="page-title">跑通第一次模型推理<span>。</span></h1><p class="hero-description">一个小模型，两次提问。<br>先在自己的电脑上跑通，再一起看它怎么工作。</p><div class="hero-actions"><a class="primary-button" href="../downloads/mini-lab-01.zip" download>下载实验包 <span>↓</span></a><a class="secondary-link" href="#download">一步一步开始 →</a></div><p class="hero-meta">Mac（M 系列）<span>·</span> Python 3.12 <span>·</span> CPU 即可</p></div>
+      <div class="hero-terminal" aria-label="本次实验的真实输出示例"><div class="terminal-bar"><span class="terminal-dots">● ● ●</span><span>LOCAL EXPERIMENT</span></div><div class="terminal-content"><p class="terminal-prompt">Prompt</p><p class="terminal-question">请用一句话解释什么是人工智能。</p><div class="terminal-divider"></div><p class="terminal-prompt">Answer</p><p class="terminal-answer">人工智能是一种模拟人类智能的理论与技术，能够使机器在执行任务时表现出与人类相似或超越人类的能力。它包括了机器学习、深度学习、自然语言处理等多个领域，并且正在逐渐渗透到我们的日常生活中。</p><p class="terminal-caption">来自本次 CPU 实验的实际回答</p></div></div>
     </section>
     <div class="tutorial-layout">
       <aside class="sidebar"><nav aria-label="教程目录"><p class="nav-label">这次的小实验</p><div class="toc">
@@ -30,7 +30,7 @@
 <li><a href="#02-python">02 · 先确认 Python 能用</a></li>
 <li><a href="#03">03 · 在实验目录打开终端</a></li>
 <li><a href="#04">04 · 准备实验环境</a></li>
-<li><a href="#05">05 · 第一个实验：让模型介绍自己</a></li>
+<li><a href="#05">05 · 第一个实验：问模型一个小问题</a></li>
 <li><a href="#06">06 · 只换一个问题</a></li>
 <li><a href="#07">07 · 再看刚才运行的脚本</a></li>
 <li><a href="#_1">卡住时，从这里检查</a></li>
@@ -39,7 +39,7 @@
 </ul>
 </div>
 </nav><div class="sidebar-note"><span>✳</span><p>一次一个主题。<br>每一步，都有结果可检查。</p></div></aside>
-      <article id="tutorial" class="tutorial"><p>这是 Mini 的第一个模型推理实验：在自己的电脑上运行一个小模型，让它介绍自己，再只换一个问题，看看回答怎么变。</p>
+      <article id="tutorial" class="tutorial"><p>这是 Mini 的第一个模型推理实验：在自己的电脑上运行一个小模型，问它一个问题，再只换输入，看看回答怎么变。</p>
 <p><strong>本篇主流程：macOS（Apple Silicon / M 系列）· Python 3.12 · CPU。无需独立显卡。</strong> 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。Windows 和 Linux 的对应命令放在文末。</p>
 <p><a id="download"></a></p>
 <h2 id="01">01 · 下载并解压实验包</h2>
@@ -122,18 +122,19 @@ python --version
 <p><strong>完成检查：</strong> 能打印 PyTorch 和 Transformers 的版本号，没有导入错误。实验包固定使用 PyTorch 2.15.0、Transformers 5.22.1 和 Jinja2 3.1.6。</p>
 <p><code>requirements.txt</code> 就在当前目录中，安装命令会读取它。它不会被自动下载，也不需要你另行创建。</p>
 <p><a id="first-run"></a></p>
-<h2 id="05">05 · 第一个实验：让模型介绍自己</h2>
+<h2 id="05">05 · 第一个实验：问模型一个小问题</h2>
 <p>运行刚才下载的完整脚本：</p>
 <pre><code class="language-sh">python example_infer.py
 </code></pre>
 <p>看到 <code>Prompt:</code> 后，输入下面这句话，再按回车：</p>
-<pre><code class="language-text">用一句话介绍你自己。
+<pre><code class="language-text">请用一句话解释什么是人工智能。
 </code></pre>
 <p>脚本会加载 <code>Qwen/Qwen2.5-0.5B-Instruct</code>。第一次需要从 Hugging Face 下载模型；后续复用缓存。看到 <code>Loading</code> 或下载进度时，先等待，不要重复启动脚本。</p>
 <p>模型加载好后会出现 <code>Generating...</code>，然后是 <code>Answer:</code>。这是我们实际运行得到的一次回答：</p>
 <blockquote>
-<p>我是来自阿里云的超大规模语言模型，我叫通义千问。</p>
+<p>人工智能是一种模拟人类智能的理论与技术，能够使机器在执行任务时表现出与人类相似或超越人类的能力。它包括了机器学习、深度学习、自然语言处理等多个领域，并且正在逐渐渗透到我们的日常生活中。</p>
 </blockquote>
+<p>这次模型写了两句话，没有完全遵循“一句话”的要求。这里保留原始回答，稍后再比较两次结果。</p>
 <p><strong>完成检查：</strong> 你的终端出现 <code>Answer:</code> 和一段非空文字，随后回到命令提示符。回答不必与这里逐字一致。</p>
 <p>这个脚本每次只处理一个问题，然后退出。想再问一次，就再运行一次。</p>
 <p><a id="second-run"></a></p>

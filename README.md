@@ -6,7 +6,7 @@
 
 | 实验 | 这次做什么 | 下载 |
 | --- | --- | --- |
-| [01 · 让模型介绍自己](https://newbdez33.github.io/mini-inference-lab/ep1/) | 在 CPU 上运行一个小模型，再换一个问题。 | [mini-lab-01.zip](https://github.com/newbdez33/mini-inference-lab/raw/refs/heads/main/packages/mini-lab-01.zip) |
+| [01 · 跑通第一次模型推理](https://newbdez33.github.io/mini-inference-lab/ep1/) | 在 CPU 上运行一个小模型，再换一个问题。 | [mini-lab-01.zip](https://github.com/newbdez33/mini-inference-lab/raw/refs/heads/main/packages/mini-lab-01.zip) |
 
 实验包解压后自带 `mini-lab-01` 文件夹，包含完整脚本、依赖清单、操作说明和实际运行记录。无需自己新建目录或编写 `requirements.txt`。
 

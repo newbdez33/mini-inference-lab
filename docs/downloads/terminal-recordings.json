@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-11-06T15:17:18.174749+00:00",
+  "capturedAt": "2026-11-07T04:25:33.725279+00:00",
   "model": "Qwen/Qwen2.5-0.5B-Instruct",
   "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
   "device": "cpu",
@@ -19,11 +19,11 @@
     {
       "id": "01",
       "command": "python example_infer.py",
-      "input": "用一句话介绍你自己。",
-      "answer": "我是来自阿里云的超大规模语言模型，我叫通义千问。",
-      "stdout": "Prompt: Loading Qwen/Qwen2.5-0.5B-Instruct on CPU (float32)...\nGenerating...\nAnswer:\n我是来自阿里云的超大规模语言模型，我叫通义千问。\n",
-      "transcript": "$ python example_infer.py\nPrompt: 用一句话介绍你自己。\nLoading Qwen/Qwen2.5-0.5B-Instruct on CPU (float32)...\nGenerating...\nAnswer:\n我是来自阿里云的超大规模语言模型，我叫通义千问。\n",
-      "processSeconds": 17.61
+      "input": "请用一句话解释什么是人工智能。",
+      "answer": "人工智能是一种模拟人类智能的理论与技术，能够使机器在执行任务时表现出与人类相似或超越人类的能力。它包括了机器学习、深度学习、自然语言处理等多个领域，并且正在逐渐渗透到我们的日常生活中。",
+      "stdout": "Prompt: Loading Qwen/Qwen2.5-0.5B-Instruct on CPU (float32)...\nGenerating...\nAnswer:\n人工智能是一种模拟人类智能的理论与技术，能够使机器在执行任务时表现出与人类相似或超越人类的能力。它包括了机器学习、深度学习、自然语言处理等多个领域，并且正在逐渐渗透到我们的日常生活中。\n",
+      "transcript": "$ python example_infer.py\nPrompt: 请用一句话解释什么是人工智能。\nLoading Qwen/Qwen2.5-0.5B-Instruct on CPU (float32)...\nGenerating...\nAnswer:\n人工智能是一种模拟人类智能的理论与技术，能够使机器在执行任务时表现出与人类相似或超越人类的能力。它包括了机器学习、深度学习、自然语言处理等多个领域，并且正在逐渐渗透到我们的日常生活中。\n",
+      "processSeconds": 5.86
     },
     {
       "id": "02",

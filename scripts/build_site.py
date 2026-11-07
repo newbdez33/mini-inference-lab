@@ -36,6 +36,8 @@ def main() -> None:
     title, _, source = source.partition("\n")
     records = json.loads((EPISODE / "terminal-recordings.json").read_text())
     for run in records["runs"]:
+        if run["input"] not in source:
+            raise ValueError(f"Tutorial input differs from the captured run: {run['id']}")
         if run["answer"] not in source:
             raise ValueError(f"Tutorial output differs from the captured run: {run['id']}")
     converter = markdown.Markdown(extensions=["fenced_code", "tables", "toc", "attr_list", "md_in_html"])
@@ -44,6 +46,8 @@ def main() -> None:
     lesson_title = html.escape(title.removeprefix("# "))
     style_version = hashlib.sha256((SITE / "assets" / "site.css").read_bytes()).hexdigest()[:12]
     page = template.replace("{{TITLE}}", lesson_title)
+    page = page.replace("{{FIRST_PROMPT}}", html.escape(records["runs"][0]["input"]))
+    page = page.replace("{{FIRST_ANSWER}}", html.escape(records["runs"][0]["answer"]))
     page = page.replace("{{STYLE_VERSION}}", style_version)
     page = page.replace("{{TOC}}", converter.toc).replace("{{CONTENT}}", content)
     SITE.mkdir(exist_ok=True)
