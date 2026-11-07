@@ -56,7 +56,7 @@
 <li><a href="#01">01 · 下载并解压实验包</a></li>
 <li><a href="#02-python">02 · 先确认 Python 能用</a></li>
 <li><a href="#03">03 · 在实验目录打开终端</a></li>
-<li><a href="#04">04 · 准备实验环境</a></li>
+<li><a href="#04">04 · 安装实验依赖</a></li>
 <li><a href="#05">05 · 第一个实验：问模型一个小问题</a></li>
 <li><a href="#06">06 · 只换一个问题</a></li>
 <li><a href="#07">07 · 再看刚才运行的脚本</a></li>
@@ -103,22 +103,22 @@
 <div class="platform-commands">
 <div data-platforms="macos linux">
 <p><strong>macOS · Linux</strong></p>
-<pre><code class="language-sh">python3 --version
+<pre><code class="language-sh">python --version
 </code></pre>
 </div>
 <div data-platforms="windows">
 <p><strong>Windows · PowerShell</strong></p>
-<pre><code class="language-powershell">py -3 --version
+<pre><code class="language-powershell">python --version
 </code></pre>
 </div>
 </div>
-<p>本实验需要 <strong>Python 3.11 或更新版本</strong>。版本符合就可以继续，无需特地更换已有环境。这里是在检查电脑上已有的工具，还没有进入实验目录。</p>
+<p>本实验需要 <strong>Python 3.11 或更新版本</strong>，命令统一写作 <code>python</code>。版本符合就可以继续，无需特地更换已有环境。这里是在检查电脑上已有的工具，还没有进入实验目录。</p>
 <details>
 <summary>找不到 Python，或版本太旧？</summary>
 <ul>
-<li><strong>macOS：</strong> 已有 Homebrew 时，可以执行 <code>brew install python</code>。没有 Homebrew 时，先按 <a href="https://docs.brew.sh/Installation">Homebrew 官方安装说明</a>安装并完成 shell 配置，再重新打开终端。</li>
-<li><strong>Windows：</strong> 按 <a href="https://docs.python.org/3/using/windows.html">Python 官方 Windows 说明</a>安装 Python，然后重新打开 PowerShell。</li>
-<li><strong>Linux：</strong> 按 <a href="https://docs.python.org/3/using/unix.html">Python 官方 Unix 说明</a>和发行版文档安装 Python 及其 <code>venv</code> 支持。</li>
+<li><strong>macOS：</strong> 已有 Homebrew 时，可以执行 <code>brew install python</code>。如果仍找不到 <code>python</code>，在当前终端执行 <code>export PATH="$(brew --prefix python)/libexec/bin:$PATH"</code>，让终端找到 Homebrew 提供的命令。没有 Homebrew 时，先按 <a href="https://docs.brew.sh/Installation">Homebrew 官方安装说明</a>安装并完成 shell 配置。</li>
+<li><strong>Windows：</strong> 按 <a href="https://docs.python.org/3/using/windows.html">Python 官方 Windows 说明</a>安装 Python，确认 <code>python</code> 已加入命令搜索路径，再重新打开 PowerShell。</li>
+<li><strong>Linux：</strong> 按 <a href="https://docs.python.org/3/using/unix.html">Python 官方 Unix 说明</a>和发行版文档安装 Python 及 <code>python</code> 命令。Debian / Ubuntu 可通过 <a href="https://packages.debian.org/stable/python-is-python3">python-is-python3</a> 软件包提供这个命令。</li>
 </ul>
 <p>也可以使用自己熟悉的 Python 管理工具。<strong>重新运行上面的版本检查，确认符合要求后再继续。</strong></p>
 </details>
@@ -141,35 +141,10 @@ Get-ChildItem example_infer.py, requirements.txt
 </div>
 <p><strong>完成检查：</strong> 两个文件名都能列出，没有文件或路径不存在的报错。后面所有命令都在这个终端、这个目录里执行。</p>
 <p><a id="environment"></a></p>
-<h2 id="04">04 · 准备实验环境</h2>
-<p>先给这个实验创建一个单独的 Python 环境：</p>
-<div class="platform-commands">
-<div data-platforms="macos linux">
-<p><strong>macOS · Linux</strong></p>
-<pre><code class="language-sh">python3 -m venv .venv
-</code></pre>
-</div>
-<div data-platforms="windows">
-<p><strong>Windows · PowerShell</strong></p>
-<pre><code class="language-powershell">py -3 -m venv .venv
-</code></pre>
-</div>
-</div>
-<p>接下来使用这个环境：</p>
-<div class="platform-commands">
-<div data-platforms="macos linux">
-<p><strong>macOS · Linux</strong></p>
-<pre><code class="language-sh">source .venv/bin/activate
-</code></pre>
-<p>激活后，后续的 <code>python</code> 会使用这个环境。终端提示符通常会多出 <code>(.venv)</code>。</p>
-</div>
-<div data-platforms="windows">
-<p><strong>Windows · PowerShell</strong></p>
-<pre><code class="language-powershell">.\.venv\Scripts\python.exe --version
-</code></pre>
-<p>Windows 直接调用环境里的 Python，无需激活或修改 PowerShell 的执行策略。</p>
-</div>
-</div>
+<h2 id="04">04 · 安装实验依赖</h2>
+<blockquote>
+<p>建议在独立的 Python 虚拟环境（venv）中运行本实验，避免影响其他项目。</p>
+</blockquote>
 <p>安装实验包中列出的依赖：</p>
 <div class="platform-commands">
 <div data-platforms="macos">
@@ -179,8 +154,8 @@ Get-ChildItem example_infer.py, requirements.txt
 </div>
 <div data-platforms="windows">
 <p><strong>Windows · PowerShell</strong></p>
-<pre><code class="language-powershell">.\.venv\Scripts\python.exe -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+<pre><code class="language-powershell">python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r requirements.txt
 </code></pre>
 <p>先安装 CPU 版 PyTorch，再安装其余依赖。</p>
 </div>
@@ -201,7 +176,7 @@ python -m pip install -r requirements.txt
 </div>
 <div data-platforms="windows">
 <p><strong>Windows · PowerShell</strong></p>
-<pre><code class="language-powershell">.\.venv\Scripts\python.exe -c &quot;import torch, transformers; print(torch.__version__); print(transformers.__version__)&quot;
+<pre><code class="language-powershell">python -c &quot;import torch, transformers; print(torch.__version__); print(transformers.__version__)&quot;
 </code></pre>
 </div>
 </div>
@@ -218,7 +193,7 @@ python -m pip install -r requirements.txt
 </div>
 <div data-platforms="windows">
 <p><strong>Windows · PowerShell</strong></p>
-<pre><code class="language-powershell">.\.venv\Scripts\python.exe example_infer.py
+<pre><code class="language-powershell">python example_infer.py
 </code></pre>
 </div>
 </div>
@@ -244,7 +219,7 @@ python -m pip install -r requirements.txt
 </div>
 <div data-platforms="windows">
 <p><strong>Windows · PowerShell</strong></p>
-<pre><code class="language-powershell">.\.venv\Scripts\python.exe example_infer.py
+<pre><code class="language-powershell">python example_infer.py
 </code></pre>
 </div>
 </div>
@@ -278,8 +253,8 @@ python -m pip install -r requirements.txt
 </thead>
 <tbody>
 <tr>
-<td>找不到 <code>python3</code> 或 <code>py</code> 命令</td>
-<td>回到“先确认 Python 能用”，安装并确认版本后再继续。</td>
+<td>找不到 <code>python</code> 命令</td>
+<td>回到“先确认 Python 能用”，确认安装和命令搜索路径，再检查版本。</td>
 </tr>
 <tr>
 <td><code>requirements.txt</code> 或脚本找不到</td>
@@ -287,11 +262,11 @@ python -m pip install -r requirements.txt
 </tr>
 <tr>
 <td><code>ModuleNotFoundError</code></td>
-<td>回到“准备实验环境”，确认顶部选对系统，再重新安装依赖；安装和运行要使用同一个环境。</td>
+<td>回到“安装实验依赖”，确认顶部选对系统，再用同一个 <code>python -m pip</code> 安装依赖。</td>
 </tr>
 <tr>
 <td>安装失败，或版本检查失败</td>
-<td>先确认使用的是 <code>.venv</code> 中的 Python、版本符合上方要求，再检查网络和完整报错。</td>
+<td>先确认 Python 版本符合上方要求，再检查网络和完整报错。</td>
 </tr>
 <tr>
 <td>模型下载失败</td>
@@ -304,10 +279,6 @@ python -m pip install -r requirements.txt
 <tr>
 <td>内存不足</td>
 <td>关闭其他占用内存的程序后重试。</td>
-</tr>
-<tr>
-<td>新开终端后命令失效</td>
-<td>重新进入 <code>mini-lab-01</code>，再按“准备实验环境”中的步骤使用已有环境。</td>
 </tr>
 </tbody>
 </table>

@@ -20,7 +20,7 @@
 
 ```sh
 uv run --with Markdown==3.11.3 scripts/build_site.py
-python3 -m unittest discover -s episode-01 -p 'test_*.py'
+python -m unittest discover -s episode-01 -p 'test_*.py'
 ```
 
 GitHub Pages 发布 `main` 分支的 `docs/`。静态页面已构建，无需观众安装网页工具。视频制作内容在单独的私有仓库维护。

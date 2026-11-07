@@ -39,7 +39,7 @@ mini-lab-01/
 **macOS · Linux**
 
 ```sh
-python3 --version
+python --version
 ```
 
 </div>
@@ -48,20 +48,20 @@ python3 --version
 **Windows · PowerShell**
 
 ```powershell
-py -3 --version
+python --version
 ```
 
 </div>
 </div>
 
-本实验需要 **Python 3.11 或更新版本**。版本符合就可以继续，无需特地更换已有环境。这里是在检查电脑上已有的工具，还没有进入实验目录。
+本实验需要 **Python 3.11 或更新版本**，命令统一写作 `python`。版本符合就可以继续，无需特地更换已有环境。这里是在检查电脑上已有的工具，还没有进入实验目录。
 
 <details markdown="1">
 <summary>找不到 Python，或版本太旧？</summary>
 
-- **macOS：** 已有 Homebrew 时，可以执行 `brew install python`。没有 Homebrew 时，先按 [Homebrew 官方安装说明](https://docs.brew.sh/Installation)安装并完成 shell 配置，再重新打开终端。
-- **Windows：** 按 [Python 官方 Windows 说明](https://docs.python.org/3/using/windows.html)安装 Python，然后重新打开 PowerShell。
-- **Linux：** 按 [Python 官方 Unix 说明](https://docs.python.org/3/using/unix.html)和发行版文档安装 Python 及其 `venv` 支持。
+- **macOS：** 已有 Homebrew 时，可以执行 `brew install python`。如果仍找不到 `python`，在当前终端执行 `export PATH="$(brew --prefix python)/libexec/bin:$PATH"`，让终端找到 Homebrew 提供的命令。没有 Homebrew 时，先按 [Homebrew 官方安装说明](https://docs.brew.sh/Installation)安装并完成 shell 配置。
+- **Windows：** 按 [Python 官方 Windows 说明](https://docs.python.org/3/using/windows.html)安装 Python，确认 `python` 已加入命令搜索路径，再重新打开 PowerShell。
+- **Linux：** 按 [Python 官方 Unix 说明](https://docs.python.org/3/using/unix.html)和发行版文档安装 Python 及 `python` 命令。Debian / Ubuntu 可通过 [python-is-python3](https://packages.debian.org/stable/python-is-python3) 软件包提供这个命令。
 
 也可以使用自己熟悉的 Python 管理工具。**重新运行上面的版本检查，确认符合要求后再继续。**
 
@@ -100,57 +100,9 @@ Get-ChildItem example_infer.py, requirements.txt
 
 <a id="environment"></a>
 
-## 04 · 准备实验环境
+## 04 · 安装实验依赖
 
-先给这个实验创建一个单独的 Python 环境：
-
-<div class="platform-commands" markdown="1">
-<div data-platforms="macos linux" markdown="1">
-
-**macOS · Linux**
-
-```sh
-python3 -m venv .venv
-```
-
-</div>
-<div data-platforms="windows" markdown="1">
-
-**Windows · PowerShell**
-
-```powershell
-py -3 -m venv .venv
-```
-
-</div>
-</div>
-
-接下来使用这个环境：
-
-<div class="platform-commands" markdown="1">
-<div data-platforms="macos linux" markdown="1">
-
-**macOS · Linux**
-
-```sh
-source .venv/bin/activate
-```
-
-激活后，后续的 `python` 会使用这个环境。终端提示符通常会多出 `(.venv)`。
-
-</div>
-<div data-platforms="windows" markdown="1">
-
-**Windows · PowerShell**
-
-```powershell
-.\.venv\Scripts\python.exe --version
-```
-
-Windows 直接调用环境里的 Python，无需激活或修改 PowerShell 的执行策略。
-
-</div>
-</div>
+> 建议在独立的 Python 虚拟环境（venv）中运行本实验，避免影响其他项目。
 
 安装实验包中列出的依赖：
 
@@ -169,8 +121,8 @@ python -m pip install -r requirements.txt
 **Windows · PowerShell**
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r requirements.txt
 ```
 
 先安装 CPU 版 PyTorch，再安装其余依赖。
@@ -207,7 +159,7 @@ python -c "import torch, transformers; print(torch.__version__); print(transform
 **Windows · PowerShell**
 
 ```powershell
-.\.venv\Scripts\python.exe -c "import torch, transformers; print(torch.__version__); print(transformers.__version__)"
+python -c "import torch, transformers; print(torch.__version__); print(transformers.__version__)"
 ```
 
 </div>
@@ -238,7 +190,7 @@ python example_infer.py
 **Windows · PowerShell**
 
 ```powershell
-.\.venv\Scripts\python.exe example_infer.py
+python example_infer.py
 ```
 
 </div>
@@ -283,7 +235,7 @@ python example_infer.py
 **Windows · PowerShell**
 
 ```powershell
-.\.venv\Scripts\python.exe example_infer.py
+python example_infer.py
 ```
 
 </div>
@@ -323,14 +275,13 @@ python example_infer.py
 
 | 看到的情况 | 下一步 |
 | --- | --- |
-| 找不到 `python3` 或 `py` 命令 | 回到“先确认 Python 能用”，安装并确认版本后再继续。 |
+| 找不到 `python` 命令 | 回到“先确认 Python 能用”，确认安装和命令搜索路径，再检查版本。 |
 | `requirements.txt` 或脚本找不到 | 回到“在实验目录打开终端”，确认解压目录和文件名。不要新建空文件来绕过错误。 |
-| `ModuleNotFoundError` | 回到“准备实验环境”，确认顶部选对系统，再重新安装依赖；安装和运行要使用同一个环境。 |
-| 安装失败，或版本检查失败 | 先确认使用的是 `.venv` 中的 Python、版本符合上方要求，再检查网络和完整报错。 |
+| `ModuleNotFoundError` | 回到“安装实验依赖”，确认顶部选对系统，再用同一个 `python -m pip` 安装依赖。 |
+| 安装失败，或版本检查失败 | 先确认 Python 版本符合上方要求，再检查网络和完整报错。 |
 | 模型下载失败 | 检查能否访问模型页面，再运行同一条命令；已有缓存通常可以复用。 |
 | 一直显示加载或下载进度 | 首次下载和 CPU 推理可能需要等待；没有报错时先让当前进程完成。 |
 | 内存不足 | 关闭其他占用内存的程序后重试。 |
-| 新开终端后命令失效 | 重新进入 `mini-lab-01`，再按“准备实验环境”中的步骤使用已有环境。 |
 
 如果需要反馈问题，保留操作系统、Python 版本、执行的命令和完整报错；在 [仓库的 Issues](https://github.com/newbdez33/mini-inference-lab/issues) 中描述卡在哪一步。
 
