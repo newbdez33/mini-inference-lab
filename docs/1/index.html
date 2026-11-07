@@ -10,8 +10,8 @@
   <link rel="icon" href="../assets/mini-head.png" type="image/png">
   <link rel="preload" href="../assets/fonts/noto-sans-sc-lab.woff2" as="font" type="font/woff2" crossorigin>
   <script src="../assets/theme.js?v=ef3ef90701ad"></script>
-  <link rel="stylesheet" href="../assets/site.css?v=48295126fb41">
-  <script src="../assets/site.js?v=bc0655bb5a63" defer></script>
+  <link rel="stylesheet" href="../assets/site.css?v=accc56e8dbca">
+  <script src="../assets/site.js?v=8162108a3744" defer></script>
 </head>
 <body class="lesson-page">
   <a class="skip-link" href="#tutorial">跳到教程正文</a>
@@ -69,7 +69,7 @@
       </aside>
       <article id="tutorial" class="tutorial"><p>这是 Mini 的第一个模型推理实验：在自己的电脑上运行一个小模型，问它一个问题，再只换输入，看看回答怎么变。</p>
 <p><strong>预计用时：10–15 分钟。</strong> 包括阅读步骤和动手操作；首次安装 Python、安装依赖及下载模型的等待时间另计。</p>
-<p><strong>本篇使用 Python 和 CPU，无需独立显卡。</strong> 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。命令块可以切换 macOS、Windows 和 Linux；切换一处，整页同步。Windows 请使用 PowerShell，macOS 和 Linux 使用终端。</p>
+<p><strong>本篇使用 Python 和 CPU，无需独立显卡。</strong> 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。在页面顶部选择 macOS、Windows 或 Linux，整页命令会一起切换。点击命令块右上角的“复制命令”，即可粘贴到终端。Windows 请使用 PowerShell，macOS 和 Linux 使用终端。</p>
 <p><a id="download"></a></p>
 <h2 id="01">01 · 下载并解压实验包</h2>
 <p><a href="../downloads/mini-lab-01.zip">下载 mini-lab-01.zip</a></p>
@@ -99,7 +99,7 @@
 <p><strong>完成检查：</strong> 打开解压后的文件夹，能看到上面两个文件。操作说明和示例回答直接看本页。</p>
 <p><a id="python"></a></p>
 <h2 id="02-python">02 · 先确认 Python 能用</h2>
-<p>打开终端，选择自己的系统，运行：</p>
+<p>在页面顶部选好系统，再打开终端，运行：</p>
 <div class="platform-commands">
 <div data-platforms="macos linux">
 <p><strong>macOS · Linux</strong></p>
@@ -287,7 +287,7 @@ python -m pip install -r requirements.txt
 </tr>
 <tr>
 <td><code>ModuleNotFoundError</code></td>
-<td>回到“准备实验环境”，按当前系统的标签重新安装依赖，确保安装和运行使用同一个环境。</td>
+<td>回到“准备实验环境”，确认顶部选对系统，再重新安装依赖；安装和运行要使用同一个环境。</td>
 </tr>
 <tr>
 <td>安装失败，或版本检查失败</td>

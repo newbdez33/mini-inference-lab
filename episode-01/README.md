@@ -4,7 +4,7 @@
 
 **预计用时：10–15 分钟。** 包括阅读步骤和动手操作；首次安装 Python、安装依赖及下载模型的等待时间另计。
 
-**本篇使用 Python 和 CPU，无需独立显卡。** 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。命令块可以切换 macOS、Windows 和 Linux；切换一处，整页同步。Windows 请使用 PowerShell，macOS 和 Linux 使用终端。
+**本篇使用 Python 和 CPU，无需独立显卡。** 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。在页面顶部选择 macOS、Windows 或 Linux，整页命令会一起切换。点击命令块右上角的“复制命令”，即可粘贴到终端。Windows 请使用 PowerShell，macOS 和 Linux 使用终端。
 
 <a id="download"></a>
 
@@ -31,7 +31,7 @@ mini-lab-01/
 
 ## 02 · 先确认 Python 能用
 
-打开终端，选择自己的系统，运行：
+在页面顶部选好系统，再打开终端，运行：
 
 <div class="platform-commands" markdown="1">
 <div data-platforms="macos linux" markdown="1">
@@ -325,7 +325,7 @@ python example_infer.py
 | --- | --- |
 | 找不到 `python3` 或 `py` 命令 | 回到“先确认 Python 能用”，安装并确认版本后再继续。 |
 | `requirements.txt` 或脚本找不到 | 回到“在实验目录打开终端”，确认解压目录和文件名。不要新建空文件来绕过错误。 |
-| `ModuleNotFoundError` | 回到“准备实验环境”，按当前系统的标签重新安装依赖，确保安装和运行使用同一个环境。 |
+| `ModuleNotFoundError` | 回到“准备实验环境”，确认顶部选对系统，再重新安装依赖；安装和运行要使用同一个环境。 |
 | 安装失败，或版本检查失败 | 先确认使用的是 `.venv` 中的 Python、版本符合上方要求，再检查网络和完整报错。 |
 | 模型下载失败 | 检查能否访问模型页面，再运行同一条命令；已有缓存通常可以复用。 |
 | 一直显示加载或下载进度 | 首次下载和 CPU 推理可能需要等待；没有报错时先让当前进程完成。 |

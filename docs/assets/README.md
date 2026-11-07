@@ -3,9 +3,9 @@
 - `mini-head.png`: approved Mini website avatar, derived from the character artwork. Production source images stay outside this repository.
 - `fonts/noto-sans-sc-lab.woff2`: local Noto Sans SC variable font for display headings. The subset covers the catalog and first lesson titles. Its source and hash are in `fonts/source.json`; the SIL Open Font License is in `fonts/OFL.txt`.
 - Body text uses native system fonts. On macOS, this is PingFang SC for Chinese and San Francisco for Latin text. Headings use the local font; code uses the system monospace font.
-- `site.css`: shared theme tokens, catalog layout, and tutorial layout.
+- `site.css`: shared theme tokens, catalog layout, and tutorial layout. Command blocks use a dark terminal surface in both themes.
 - `theme.js`: sets the initial theme before paint and stores the visitor's choice across pages. Dark mode is the default.
-- `site.js`: platform selection, tutorial copy controls, and current-section navigation. Platform choices stay in sync across the top switcher and command tabs and persist in local storage.
+- `site.js`: platform selection, tutorial copy controls, and current-section navigation. The top switcher sets the platform for every command block and persists the choice in local storage. Command blocks show a shell label and a copy button. Display-only shell prompts do not enter the clipboard.
 
 In a lesson, group platform commands in a `div.platform-commands` with `markdown="1"`. Each child `div` must have `markdown="1"`, a `data-platforms` list (`macos`, `windows`, or `linux`), a leading platform label, and one fenced code block. A panel can serve multiple platforms. Each group must cover all three platforms exactly once. Optional text after the command provides platform-specific guidance. Without JavaScript, all labeled variants remain readable.
 

@@ -8,7 +8,7 @@ function codeLanguage(code) {
 
 function updateCopyButton(button, code) {
   const label = codeLanguage(code) === "text" ? "复制问题" : "复制命令";
-  button.textContent = label;
+  button.querySelector(".copy-label").textContent = label;
   button.setAttribute("aria-label", label + "：" + code.textContent.split("\n")[0]);
 }
 
@@ -16,13 +16,19 @@ function createCopyButton(getCode) {
   const button = document.createElement("button");
   button.type = "button";
   button.className = "copy-button";
+  const icon = document.createElement("span");
+  icon.className = "copy-icon";
+  icon.setAttribute("aria-hidden", "true");
+  const label = document.createElement("span");
+  label.className = "copy-label";
+  button.append(icon, label);
   updateCopyButton(button, getCode());
   button.addEventListener("click", async () => {
     const code = getCode();
     const text = code.textContent.replace(/\n$/, "");
     try {
       await navigator.clipboard.writeText(text);
-      if (getCode() === code) button.textContent = "已复制";
+      if (getCode() === code) label.textContent = "已复制";
       status.textContent = codeLanguage(code) === "text" ? "已复制问题，请在 Prompt 后粘贴。" : "已复制命令，可以粘贴到终端。";
     } catch {
       const selection = window.getSelection();
@@ -30,12 +36,35 @@ function createCopyButton(getCode) {
       range.selectNodeContents(code);
       selection.removeAllRanges();
       selection.addRange(range);
-      button.textContent = "已选中";
+      label.textContent = "已选中";
       status.textContent = "请使用系统复制快捷键复制选中的内容。";
     }
     setTimeout(() => updateCopyButton(button, getCode()), 2200);
   });
   return button;
+}
+
+function formatCommand(code) {
+  const fragment = document.createDocumentFragment();
+  for (const [index, line] of code.textContent.split("\n").entries()) {
+    if (index) fragment.append("\n");
+    if (!line) continue;
+    const row = document.createElement("span");
+    row.className = "command-line";
+    // Render prompts with CSS so they stay out of copied commands.
+    row.dataset.prompt = codeLanguage(code) === "powershell" ? "PS>" : "$";
+    const match = line.match(/^(\S+)(.*)$/);
+    if (match) {
+      const command = document.createElement("span");
+      command.className = "command-name";
+      command.textContent = match[1];
+      row.append(command, match[2]);
+    } else {
+      row.textContent = line;
+    }
+    fragment.append(row);
+  }
+  code.replaceChildren(fragment);
 }
 
 const platforms = [
@@ -55,17 +84,14 @@ const platformRadios = [...document.querySelectorAll(".platform-options [data-pl
 
 function selectPlatform(platform) {
   selectedPlatform = platform;
+  const platformLabel = platforms.find(item => item.id === platform).label;
   for (const group of platformGroups) {
-    for (const tab of group.tabs) {
-      const selected = tab.dataset.platform === platform;
-      tab.setAttribute("aria-selected", String(selected));
-      tab.tabIndex = selected ? 0 : -1;
-    }
     for (const panel of group.panels) {
       panel.hidden = !panel.dataset.platforms.split(" ").includes(platform);
-      if (!panel.hidden) panel.setAttribute("aria-labelledby", group.tabs.find(tab => tab.dataset.platform === platform).id);
     }
-    updateCopyButton(group.copyButton, group.getCode());
+    const code = group.getCode();
+    group.label.textContent = `${codeLanguage(code) === "powershell" ? "PowerShell" : "Shell"} · ${platformLabel}`;
+    updateCopyButton(group.copyButton, code);
   }
   for (const radio of platformRadios) {
     const selected = radio.dataset.platform === platform;
@@ -96,34 +122,28 @@ for (const [index, group] of [...document.querySelectorAll(".platform-commands")
   const panels = [...group.querySelectorAll(":scope > [data-platforms]")];
   const toolbar = document.createElement("div");
   toolbar.className = "code-toolbar";
-  const tablist = document.createElement("div");
-  tablist.className = "platform-tabs";
-  tablist.setAttribute("role", "tablist");
-  tablist.setAttribute("aria-label", "命令适用系统");
-  for (const [panelIndex, panel] of panels.entries()) {
-    panel.id = `platform-${index + 1}-panel-${panelIndex + 1}`;
-    panel.setAttribute("role", "tabpanel");
+  const title = document.createElement("span");
+  title.className = "terminal-title";
+  const icon = document.createElement("span");
+  icon.className = "terminal-icon";
+  icon.textContent = ">_";
+  icon.setAttribute("aria-hidden", "true");
+  const label = document.createElement("span");
+  label.id = `command-${index + 1}-label`;
+  title.append(icon, label);
+  group.setAttribute("role", "group");
+  group.setAttribute("aria-labelledby", label.id);
+  for (const panel of panels) {
     panel.firstElementChild.classList.add("platform-label");
     panel.querySelector("pre").tabIndex = 0;
+    formatCommand(panel.querySelector("code"));
   }
-  const tabs = platforms.map(platform => {
-    const tab = document.createElement("button");
-    tab.type = "button";
-    tab.id = `platform-${index + 1}-${platform.id}-tab`;
-    tab.dataset.platform = platform.id;
-    tab.textContent = platform.label;
-    tab.setAttribute("role", "tab");
-    tab.setAttribute("aria-controls", panels.find(panel => panel.dataset.platforms.split(" ").includes(platform.id)).id);
-    tablist.append(tab);
-    return tab;
-  });
   const getCode = () => panels.find(panel => panel.dataset.platforms.split(" ").includes(selectedPlatform)).querySelector("code");
   const copyButton = createCopyButton(getCode);
-  toolbar.append(tablist, copyButton);
+  toolbar.append(title, copyButton);
   group.prepend(toolbar);
-  group.classList.add("code-block", "is-tabbed");
-  platformGroups.push({tabs, panels, getCode, copyButton});
-  bindPlatformControls(tabs);
+  group.classList.add("code-block", "command-block", "is-enhanced");
+  platformGroups.push({panels, label, getCode, copyButton});
 }
 bindPlatformControls(platformRadios);
 selectPlatform(selectedPlatform);
