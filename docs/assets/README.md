@@ -5,8 +5,10 @@
 - Body text uses native system fonts. On macOS, this is PingFang SC for Chinese and San Francisco for Latin text. Headings use the local font; code uses the system monospace font.
 - `site.css`: shared theme tokens, catalog layout, and tutorial layout. Command blocks use a dark terminal surface in both themes.
 - `theme.js`: sets the initial theme before paint and stores the visitor's choice across pages. Dark mode is the default.
-- `site.js`: platform selection, tutorial copy controls, and current-section navigation. The top switcher sets the platform for every command block and persists the choice in local storage. Command blocks show a shell label and a copy button. Display-only shell prompts do not enter the clipboard.
+- `site.js`: platform selection, tutorial copy controls, and current-section navigation. The top switcher filters all tutorial content marked with `data-platforms`, including command blocks and installation help, and persists the choice in local storage. Command blocks show a shell label and a copy button. Display-only shell prompts do not enter the clipboard.
 
 In a lesson, group platform commands in a `div.platform-commands` with `markdown="1"`. Each child `div` must have `markdown="1"`, a `data-platforms` list (`macos`, `windows`, or `linux`), a leading platform label, and one fenced code block. A panel can serve multiple platforms. Each group must cover all three platforms exactly once. Optional text after the command provides platform-specific guidance. Without JavaScript, all labeled variants remain readable.
+
+For platform-specific prose, use a `div` with `data-platforms` and `markdown="1"` without the command wrapper. Keep shared guidance outside these panels.
 
 Keep body text at 16 pixels and supporting text at 13–14 pixels on all screen sizes. Check heading glyph coverage before adding a new lesson title. No external font request is made by the site.

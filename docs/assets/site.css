@@ -196,7 +196,7 @@ pre code.language-text:not(.file-tree) { font: 16px/1.85 var(--font-sans); }
 .platform-commands.is-enhanced .platform-label { display: none; }
 .platform-commands.is-enhanced > [data-platforms] > p { margin: 0; padding: 0 22px 18px; color: #bac9d5; font-size: 14px; line-height: 1.8; }
 .platform-commands.is-enhanced > [data-platforms] > p code { color: #a4e5ce; background: #18242e; }
-.platform-commands.is-enhanced > [data-platforms][hidden] { display: none; }
+.tutorial [data-platforms][hidden] { display: none; }
 .tutorial table { border-collapse: collapse; width: 100%; margin: 24px 0; font-size: 14px; line-height: 1.85; }
 .tutorial th, .tutorial td { border-bottom: 1px solid var(--line); padding: 14px; text-align: left; vertical-align: top; }
 .tutorial th { font-weight: 500; background: var(--surface); }

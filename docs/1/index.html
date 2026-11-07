@@ -10,8 +10,8 @@
   <link rel="icon" href="../assets/mini-head.png" type="image/png">
   <link rel="preload" href="../assets/fonts/noto-sans-sc-lab.woff2" as="font" type="font/woff2" crossorigin>
   <script src="../assets/theme.js?v=ef3ef90701ad"></script>
-  <link rel="stylesheet" href="../assets/site.css?v=accc56e8dbca">
-  <script src="../assets/site.js?v=8162108a3744" defer></script>
+  <link rel="stylesheet" href="../assets/site.css?v=36da8192f355">
+  <script src="../assets/site.js?v=840d80bad5b7" defer></script>
 </head>
 <body class="lesson-page">
   <a class="skip-link" href="#tutorial">跳到教程正文</a>
@@ -115,11 +115,15 @@
 <p>本实验需要 <strong>Python 3.11 或更新版本</strong>，命令统一写作 <code>python</code>。版本符合就可以继续，无需特地更换已有环境。这里是在检查电脑上已有的工具，还没有进入实验目录。</p>
 <details>
 <summary>找不到 Python，或版本太旧？</summary>
-<ul>
-<li><strong>macOS：</strong> 已有 Homebrew 时，可以执行 <code>brew install python</code>。如果仍找不到 <code>python</code>，在当前终端执行 <code>export PATH="$(brew --prefix python)/libexec/bin:$PATH"</code>，让终端找到 Homebrew 提供的命令。没有 Homebrew 时，先按 <a href="https://docs.brew.sh/Installation">Homebrew 官方安装说明</a>安装并完成 shell 配置。</li>
-<li><strong>Windows：</strong> 按 <a href="https://docs.python.org/3/using/windows.html">Python 官方 Windows 说明</a>安装 Python，确认 <code>python</code> 已加入命令搜索路径，再重新打开 PowerShell。</li>
-<li><strong>Linux：</strong> 按 <a href="https://docs.python.org/3/using/unix.html">Python 官方 Unix 说明</a>和发行版文档安装 Python 及 <code>python</code> 命令。Debian / Ubuntu 可通过 <a href="https://packages.debian.org/stable/python-is-python3">python-is-python3</a> 软件包提供这个命令。</li>
-</ul>
+<div data-platforms="macos">
+<p><strong>macOS：</strong> 已有 Homebrew 时，可以执行 <code>brew install python</code>。如果仍找不到 <code>python</code>，在当前终端执行 <code>export PATH="$(brew --prefix python)/libexec/bin:$PATH"</code>，让终端找到 Homebrew 提供的命令。没有 Homebrew 时，先按 <a href="https://docs.brew.sh/Installation">Homebrew 官方安装说明</a>安装并完成 shell 配置。</p>
+</div>
+<div data-platforms="windows">
+<p><strong>Windows：</strong> 按 <a href="https://docs.python.org/3/using/windows.html">Python 官方 Windows 说明</a>安装 Python，确认 <code>python</code> 已加入命令搜索路径，再重新打开 PowerShell。</p>
+</div>
+<div data-platforms="linux">
+<p><strong>Linux：</strong> 按 <a href="https://docs.python.org/3/using/unix.html">Python 官方 Unix 说明</a>和发行版文档安装 Python 及 <code>python</code> 命令。Debian / Ubuntu 可通过 <a href="https://packages.debian.org/stable/python-is-python3">python-is-python3</a> 软件包提供这个命令。</p>
+</div>
 <p>也可以使用自己熟悉的 Python 管理工具。<strong>重新运行上面的版本检查，确认符合要求后再继续。</strong></p>
 </details>
 <p><a id="directory"></a></p>
@@ -129,13 +133,13 @@
 <div data-platforms="macos linux">
 <p><strong>macOS · Linux</strong></p>
 <pre><code class="language-sh">cd &quot;$HOME/Downloads/mini-lab-01&quot;
-ls example_infer.py requirements.txt
+ls
 </code></pre>
 </div>
 <div data-platforms="windows">
 <p><strong>Windows · PowerShell</strong></p>
 <pre><code class="language-powershell">cd &quot;$HOME\Downloads\mini-lab-01&quot;
-Get-ChildItem example_infer.py, requirements.txt
+dir
 </code></pre>
 </div>
 </div>

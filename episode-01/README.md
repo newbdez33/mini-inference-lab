@@ -59,9 +59,21 @@ python --version
 <details markdown="1">
 <summary>找不到 Python，或版本太旧？</summary>
 
-- **macOS：** 已有 Homebrew 时，可以执行 `brew install python`。如果仍找不到 `python`，在当前终端执行 `export PATH="$(brew --prefix python)/libexec/bin:$PATH"`，让终端找到 Homebrew 提供的命令。没有 Homebrew 时，先按 [Homebrew 官方安装说明](https://docs.brew.sh/Installation)安装并完成 shell 配置。
-- **Windows：** 按 [Python 官方 Windows 说明](https://docs.python.org/3/using/windows.html)安装 Python，确认 `python` 已加入命令搜索路径，再重新打开 PowerShell。
-- **Linux：** 按 [Python 官方 Unix 说明](https://docs.python.org/3/using/unix.html)和发行版文档安装 Python 及 `python` 命令。Debian / Ubuntu 可通过 [python-is-python3](https://packages.debian.org/stable/python-is-python3) 软件包提供这个命令。
+<div data-platforms="macos" markdown="1">
+
+**macOS：** 已有 Homebrew 时，可以执行 `brew install python`。如果仍找不到 `python`，在当前终端执行 `export PATH="$(brew --prefix python)/libexec/bin:$PATH"`，让终端找到 Homebrew 提供的命令。没有 Homebrew 时，先按 [Homebrew 官方安装说明](https://docs.brew.sh/Installation)安装并完成 shell 配置。
+
+</div>
+<div data-platforms="windows" markdown="1">
+
+**Windows：** 按 [Python 官方 Windows 说明](https://docs.python.org/3/using/windows.html)安装 Python，确认 `python` 已加入命令搜索路径，再重新打开 PowerShell。
+
+</div>
+<div data-platforms="linux" markdown="1">
+
+**Linux：** 按 [Python 官方 Unix 说明](https://docs.python.org/3/using/unix.html)和发行版文档安装 Python 及 `python` 命令。Debian / Ubuntu 可通过 [python-is-python3](https://packages.debian.org/stable/python-is-python3) 软件包提供这个命令。
+
+</div>
 
 也可以使用自己熟悉的 Python 管理工具。**重新运行上面的版本检查，确认符合要求后再继续。**
 
@@ -80,7 +92,7 @@ python --version
 
 ```sh
 cd "$HOME/Downloads/mini-lab-01"
-ls example_infer.py requirements.txt
+ls
 ```
 
 </div>
@@ -90,7 +102,7 @@ ls example_infer.py requirements.txt
 
 ```powershell
 cd "$HOME\Downloads\mini-lab-01"
-Get-ChildItem example_infer.py, requirements.txt
+dir
 ```
 
 </div>

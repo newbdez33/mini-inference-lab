@@ -79,16 +79,17 @@ try {
 } catch {}
 
 const platformGroups = [];
+const platformPanels = [...document.querySelectorAll(".tutorial [data-platforms]")];
 const platformSwitcher = document.querySelector(".platform-switcher");
 const platformRadios = [...document.querySelectorAll(".platform-options [data-platform]")];
 
 function selectPlatform(platform) {
   selectedPlatform = platform;
   const platformLabel = platforms.find(item => item.id === platform).label;
+  for (const panel of platformPanels) {
+    panel.hidden = !panel.dataset.platforms.split(" ").includes(platform);
+  }
   for (const group of platformGroups) {
-    for (const panel of group.panels) {
-      panel.hidden = !panel.dataset.platforms.split(" ").includes(platform);
-    }
     const code = group.getCode();
     group.label.textContent = `${codeLanguage(code) === "powershell" ? "PowerShell" : "Shell"} · ${platformLabel}`;
     updateCopyButton(group.copyButton, code);
@@ -143,7 +144,7 @@ for (const [index, group] of [...document.querySelectorAll(".platform-commands")
   toolbar.append(title, copyButton);
   group.prepend(toolbar);
   group.classList.add("code-block", "command-block", "is-enhanced");
-  platformGroups.push({panels, label, getCode, copyButton});
+  platformGroups.push({label, getCode, copyButton});
 }
 bindPlatformControls(platformRadios);
 selectPlatform(selectedPlatform);
