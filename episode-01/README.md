@@ -65,7 +65,7 @@ python --version
 </div>
 </div>
 
-> 建议在独立的 Python 虚拟环境（venv）中运行本实验，避免影响其他项目。
+> 建议在独立的 Python 虚拟环境（[venv](https://docs.python.org/zh-cn/3/library/venv.html)）中运行本实验，避免影响其他项目。
 
 本实验需要 **Python 3.11 或更新版本**，命令统一写作 `python`。版本符合就可以继续，无需特地更换已有环境。这里是在检查电脑上已有的工具，还没有进入实验目录。
 
