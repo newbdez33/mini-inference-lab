@@ -39,12 +39,20 @@ def main() -> None:
         if run["answer"] not in source:
             raise ValueError(f"Tutorial output differs from the captured run: {run['id']}")
     converter = markdown.Markdown(extensions=["fenced_code", "tables", "toc", "attr_list", "md_in_html"])
-    content = converter.convert(source.replace(DOWNLOAD_URL, "downloads/mini-lab-01.zip"))
-    template = (ROOT / "scripts" / "page.html").read_text(encoding="utf-8")
-    page = template.replace("{{TITLE}}", html.escape(title.removeprefix("# ")))
+    content = converter.convert(source.replace(DOWNLOAD_URL, "../downloads/mini-lab-01.zip"))
+    template = (ROOT / "scripts" / "lesson.html").read_text(encoding="utf-8")
+    lesson_title = html.escape(title.removeprefix("# "))
+    style_version = hashlib.sha256((SITE / "assets" / "site.css").read_bytes()).hexdigest()[:12]
+    page = template.replace("{{TITLE}}", lesson_title)
+    page = page.replace("{{STYLE_VERSION}}", style_version)
     page = page.replace("{{TOC}}", converter.toc).replace("{{CONTENT}}", content)
     SITE.mkdir(exist_ok=True)
-    (SITE / "index.html").write_text(page, encoding="utf-8")
+    lesson = SITE / "ep1"
+    lesson.mkdir(exist_ok=True)
+    (lesson / "index.html").write_text(page, encoding="utf-8")
+    catalog = (ROOT / "scripts" / "catalog.html").read_text(encoding="utf-8")
+    catalog = catalog.replace("{{STYLE_VERSION}}", style_version)
+    (SITE / "index.html").write_text(catalog.replace("{{EP1_TITLE}}", lesson_title), encoding="utf-8")
     (SITE / ".nojekyll").touch()
     package = build_package()
     downloads = SITE / "downloads"
@@ -54,7 +62,7 @@ def main() -> None:
         shutil.copy2(EPISODE / name, downloads / name)
     digest = hashlib.sha256(package.read_bytes()).hexdigest()
     (downloads / "SHA256SUMS").write_text(f"{digest}  {package.name}\n")
-    print(f"Built tutorial and {package.name} ({package.stat().st_size} bytes).")
+    print(f"Built the catalog, ep1 tutorial, and {package.name} ({package.stat().st_size} bytes).")
 
 
 if __name__ == "__main__":

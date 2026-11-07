@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f6ef">
+  <meta name="description" content="Mini 的第一个模型推理实验：下载实验包，准备 Python，在 CPU 上运行小模型，再换一个问题。">
+  <title>让模型介绍自己 · Mini 的模型推理工程师之路</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/site.css?v=3a48f8fc6dbc">
+  <script src="../assets/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#tutorial">跳到教程正文</a>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="返回课程目录"><span class="brand-mark">m<span>✳</span></span><span>Mini<span class="brand-sub">INFERENCE LAB</span></span></a>
+    <span class="series-name">模型推理工程师之路</span>
+    <a class="repository-link" href="https://github.com/newbdez33/mini-inference-lab">GitHub ↗</a>
+  </header>
+  <main>
+    <nav class="breadcrumb" aria-label="课程位置"><a href="../">课程目录</a><span aria-hidden="true">/</span><span aria-current="page">实验 01</span></nav>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy"><p class="eyebrow">EXPERIMENT 01 <span>／</span> 从这里开始</p><h1 id="page-title">让模型介绍自己<span>。</span></h1><p class="hero-description">一个小模型，两次提问。<br>先在自己的电脑上跑通，再一起看它怎么工作。</p><div class="hero-actions"><a class="primary-button" href="../downloads/mini-lab-01.zip" download>下载实验包 <span>↓</span></a><a class="secondary-link" href="#download">一步一步开始 →</a></div><p class="hero-meta">Mac（M 系列）<span>·</span> Python 3.12 <span>·</span> CPU 即可</p></div>
+      <div class="hero-terminal" aria-label="本次实验的真实输出示例"><div class="terminal-bar"><span class="terminal-dots">● ● ●</span><span>LOCAL EXPERIMENT</span></div><div class="terminal-content"><p class="terminal-prompt">Prompt</p><p class="terminal-question">用一句话介绍你自己。</p><div class="terminal-divider"></div><p class="terminal-prompt">Answer</p><p class="terminal-answer">我是来自阿里云的超大规模语言模型，我叫通义千问。</p><p class="terminal-caption">来自本次 CPU 实验的实际回答</p></div></div>
+    </section>
+    <div class="tutorial-layout">
+      <aside class="sidebar"><nav aria-label="教程目录"><p class="nav-label">这次的小实验</p><div class="toc">
+<ul>
+<li><a href="#01">01 · 下载并解压实验包</a></li>
+<li><a href="#02-python">02 · 先确认 Python 能用</a></li>
+<li><a href="#03">03 · 在实验目录打开终端</a></li>
+<li><a href="#04">04 · 准备实验环境</a></li>
+<li><a href="#05">05 · 第一个实验：让模型介绍自己</a></li>
+<li><a href="#06">06 · 只换一个问题</a></li>
+<li><a href="#07">07 · 再看刚才运行的脚本</a></li>
+<li><a href="#_1">卡住时，从这里检查</a></li>
+<li><a href="#windows-linux">Windows 与 Linux</a></li>
+<li><a href="#_2">本次实验的依据</a></li>
+</ul>
+</div>
+</nav><div class="sidebar-note"><span>✳</span><p>一次一个主题。<br>每一步，都有结果可检查。</p></div></aside>
+      <article id="tutorial" class="tutorial"><p>这是 Mini 的第一个模型推理实验：在自己的电脑上运行一个小模型，让它介绍自己，再只换一个问题，看看回答怎么变。</p>
+<p><strong>本篇主流程：macOS（Apple Silicon / M 系列）· Python 3.12 · CPU。无需独立显卡。</strong> 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。Windows 和 Linux 的对应命令放在文末。</p>
+<p><a id="download"></a></p>
+<h2 id="01">01 · 下载并解压实验包</h2>
+<p><a href="../downloads/mini-lab-01.zip">下载 mini-lab-01.zip</a></p>
+<p>下载完成后，双击 ZIP 解压。包内已经有 <code>mini-lab-01</code> 文件夹，<strong>不用自己新建目录，也不用自己写脚本或依赖清单</strong>。</p>
+<pre><code class="language-text">mini-lab-01/
+├── README.md
+├── example_infer.py
+├── requirements.txt
+└── terminal-recordings.json
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>你会用它做什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>README.md</code></td>
+<td>当前这份操作说明，下载后也可以阅读。</td>
+</tr>
+<tr>
+<td><code>example_infer.py</code></td>
+<td>已写好的完整推理脚本，稍后直接运行。</td>
+</tr>
+<tr>
+<td><code>requirements.txt</code></td>
+<td>随实验包提供的依赖清单，用来安装指定版本的库。</td>
+</tr>
+<tr>
+<td><code>terminal-recordings.json</code></td>
+<td>本次实验保存的两个实际输入和回答，用来对照。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>完成检查：</strong> 打开解压后的文件夹，能看到上面四个文件。</p>
+<p><a id="python"></a></p>
+<h2 id="02-python">02 · 先确认 Python 能用</h2>
+<p>打开 macOS 的“终端”应用，运行：</p>
+<pre><code class="language-sh">python3.12 --version
+</code></pre>
+<p>看到 <code>Python 3.12.x</code> 就可以继续，末尾的补丁版本可以不同。这里是在检查电脑上已有的工具，还没有进入实验目录。</p>
+<details>
+<summary>找不到 python3.12？先安装，再继续</summary>
+<p>如果已经有 Homebrew，执行下面的命令。没有 Homebrew 时，先按 <a href="https://docs.brew.sh/Installation">Homebrew 官方安装说明</a>安装，并完成安装器显示的 shell 配置步骤，然后重新打开终端。</p>
+<pre><code class="language-sh">brew install python@3.12
+python3.12 --version
+</code></pre>
+<p>这是 <a href="https://formulae.brew.sh/formula/python@3.12">Homebrew 的 Python 3.12 安装方式</a>。<strong>确认版本检查成功后，再执行后面的环境命令。</strong> 不要因为系统里能运行 <code>python3</code>，就默认它一定是 3.12。</p>
+<p>如果使用其他 Python 管理工具，也可以使用其 Python 3.12 解释器；本篇命令统一写作 <code>python3.12</code>。</p>
+</details>
+<p><a id="directory"></a></p>
+<h2 id="03">03 · 在实验目录打开终端</h2>
+<p>如果 ZIP 下载并解压在默认的“下载”目录，执行：</p>
+<pre><code class="language-sh">cd &quot;$HOME/Downloads/mini-lab-01&quot;
+</code></pre>
+<p>如果你解压在其他位置，在终端输入 <code>cd</code>（末尾留一个空格），把解压后的 <code>mini-lab-01</code> 文件夹拖进终端，再按回车。</p>
+<p>确认当前目录里确实有这三个文件：</p>
+<pre><code class="language-sh">ls README.md example_infer.py requirements.txt
+</code></pre>
+<p><strong>完成检查：</strong> 三个文件名都能列出，没有 <code>No such file or directory</code>。后面所有命令都在这个终端、这个目录里执行。</p>
+<p><a id="environment"></a></p>
+<h2 id="04">04 · 准备实验环境</h2>
+<p>先给这个实验创建一个单独的 Python 环境：</p>
+<pre><code class="language-sh">python3.12 -m venv .venv
+</code></pre>
+<p>激活它，再确认一次 Python 版本：</p>
+<pre><code class="language-sh">source .venv/bin/activate
+python --version
+</code></pre>
+<p>现在应显示 <code>Python 3.12.x</code>。终端提示符通常也会多出 <code>(.venv)</code>。</p>
+<p>安装实验包中列出的依赖：</p>
+<pre><code class="language-sh">python -m pip install -r requirements.txt
+</code></pre>
+<p>等安装结束、终端重新出现提示符后，再检查两个主要库：</p>
+<pre><code class="language-sh">python -c &quot;import torch, transformers; print(torch.__version__); print(transformers.__version__)&quot;
+</code></pre>
+<p><strong>完成检查：</strong> 能打印 PyTorch 和 Transformers 的版本号，没有导入错误。实验包固定使用 PyTorch 2.15.0、Transformers 5.22.1 和 Jinja2 3.1.6。</p>
+<p><code>requirements.txt</code> 就在当前目录中，安装命令会读取它。它不会被自动下载，也不需要你另行创建。</p>
+<p><a id="first-run"></a></p>
+<h2 id="05">05 · 第一个实验：让模型介绍自己</h2>
+<p>运行刚才下载的完整脚本：</p>
+<pre><code class="language-sh">python example_infer.py
+</code></pre>
+<p>看到 <code>Prompt:</code> 后，输入下面这句话，再按回车：</p>
+<pre><code class="language-text">用一句话介绍你自己。
+</code></pre>
+<p>脚本会加载 <code>Qwen/Qwen2.5-0.5B-Instruct</code>。第一次需要从 Hugging Face 下载模型；后续复用缓存。看到 <code>Loading</code> 或下载进度时，先等待，不要重复启动脚本。</p>
+<p>模型加载好后会出现 <code>Generating...</code>，然后是 <code>Answer:</code>。这是我们实际运行得到的一次回答：</p>
+<blockquote>
+<p>我是来自阿里云的超大规模语言模型，我叫通义千问。</p>
+</blockquote>
+<p><strong>完成检查：</strong> 你的终端出现 <code>Answer:</code> 和一段非空文字，随后回到命令提示符。回答不必与这里逐字一致。</p>
+<p>这个脚本每次只处理一个问题，然后退出。想再问一次，就再运行一次。</p>
+<p><a id="second-run"></a></p>
+<h2 id="06">06 · 只换一个问题</h2>
+<p>仍然在同一个目录、同一个虚拟环境里，执行同一条命令：</p>
+<pre><code class="language-sh">python example_infer.py
+</code></pre>
+<p>这次在 <code>Prompt:</code> 后输入：</p>
+<pre><code class="language-text">用一句话介绍猫。
+</code></pre>
+<p>模型和生成设置都不改。我们实际得到的回答是：</p>
+<blockquote>
+<p>猫，以其优雅的外表、温顺的性格和多才多艺的生活方式，成为了许多人喜爱的宠物之一。</p>
+</blockquote>
+<p>对照两次结果：内容有没有跟着问题改变？有没有遵循“一句话”的要求？接着可以换一个你自己感兴趣的问题。</p>
+<p><strong>这次实验完成的标志：同一个模型，两个输入，两次实际回答。</strong></p>
+<p><a id="code"></a></p>
+<h2 id="07">07 · 再看刚才运行的脚本</h2>
+<p>现在打开实验包里的 <code>example_infer.py</code>。你已经运行过它了，只需要沿着问题走一遍下面三步。</p>
+<ol>
+<li><strong>加载。</strong> <code>AutoTokenizer.from_pretrained</code> 读取分词器，<code>AutoModelForCausalLM.from_pretrained</code> 加载模型。</li>
+<li><strong>整理输入。</strong> <code>apply_chat_template</code> 把问题按模型的对话格式整理成输入。</li>
+<li><strong>生成并还原文字。</strong> <code>model.generate</code> 生成新的编号；脚本去掉输入部分，再用 <code>tokenizer.decode</code> 转回文字。</li>
+</ol>
+<p>本集不修改这些代码。先记住这条顺序：<strong>问题 → 模型输入 → 生成结果 → 文字回答。</strong></p>
+<p>这里使用 CPU、float32，关闭采样，最多生成 64 个新 token。每次运行都会重新加载模型。这次验证的是流程，不比较性能，也不保证两台电脑的输出逐字相同。</p>
+<p><a id="help"></a></p>
+<h2 id="_1">卡住时，从这里检查</h2>
+<table>
+<thead>
+<tr>
+<th>看到的情况</th>
+<th>下一步</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>python3.12: command not found</code></td>
+<td>回到“先确认 Python 能用”，安装并确认版本后再继续。</td>
+</tr>
+<tr>
+<td><code>requirements.txt</code> 或脚本找不到</td>
+<td>回到“在实验目录打开终端”，确认解压目录和文件名。不要新建空文件来绕过错误。</td>
+</tr>
+<tr>
+<td><code>ModuleNotFoundError</code></td>
+<td>重新激活 <code>.venv</code>，用同一个 <code>python -m pip</code> 安装依赖。</td>
+</tr>
+<tr>
+<td>安装失败，或版本检查失败</td>
+<td>先确认 <code>python --version</code> 是 3.12，并检查网络；不要继续运行模型来跳过安装错误。</td>
+</tr>
+<tr>
+<td>模型下载失败</td>
+<td>检查能否访问模型页面，再运行同一条命令；已有缓存通常可以复用。</td>
+</tr>
+<tr>
+<td>一直显示加载或下载进度</td>
+<td>首次下载和 CPU 推理可能需要等待；没有报错时先让当前进程完成。</td>
+</tr>
+<tr>
+<td>内存不足</td>
+<td>关闭其他占用内存的程序后重试。</td>
+</tr>
+<tr>
+<td>新开终端后命令失效</td>
+<td>重新进入 <code>mini-lab-01</code>，执行 <code>source .venv/bin/activate</code>。</td>
+</tr>
+</tbody>
+</table>
+<p>如果需要反馈问题，保留操作系统、Python 版本、执行的命令和完整报错；在 <a href="https://github.com/newbdez33/mini-inference-lab/issues">仓库的 Issues</a> 中描述卡在哪一步。</p>
+<p><a id="other-systems"></a></p>
+<h2 id="windows-linux">Windows 与 Linux</h2>
+<p>主流程实际验证于 macOS、Apple Silicon、Python 3.12、CPU。下面提供其他系统的对应命令，<strong>尚未在这次制作中实测</strong>。Intel Mac 不在本篇已验证的环境范围内。</p>
+<details>
+<summary>Windows · PowerShell</summary>
+<p>先安装 Python 3.12，并确认启动器能找到它：</p>
+<pre><code class="language-powershell">py -3.12 --version
+</code></pre>
+<p>若命令不存在或提示未找到 3.12，先按 <a href="https://docs.python.org/3.12/using/windows.html">Python 官方 Windows 说明</a>配置解释器，不要跳过检查。</p>
+<p>解压实验包后，在 PowerShell 进入实际目录。默认下载目录示例：</p>
+<pre><code class="language-powershell">cd &quot;$HOME\Downloads\mini-lab-01&quot;
+Get-ChildItem README.md, example_infer.py, requirements.txt
+</code></pre>
+<p>创建环境并直接调用其中的 Python，无需修改 PowerShell 的执行策略：</p>
+<pre><code class="language-powershell">py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe example_infer.py
+</code></pre>
+<p>看到 <code>Prompt:</code> 后输入问题。第二次运行仍然使用最后一条命令。</p>
+</details>
+<details>
+<summary>Linux · shell</summary>
+<p>先配置 Python 3.12 及其 <code>venv</code> 支持，并确认：</p>
+<pre><code class="language-sh">python3.12 --version
+</code></pre>
+<p>具体安装方式取决于发行版。先按 <a href="https://docs.python.org/3.12/using/unix.html">Python 官方 Unix 说明</a>和发行版文档完成这一步。</p>
+<p>进入实际解压出的 <code>mini-lab-01</code> 目录，再执行：</p>
+<pre><code class="language-sh">python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r requirements.txt
+python example_infer.py
+</code></pre>
+<p>单独安装 CPU 版本的 PyTorch 后，再安装剩余依赖。第二次提问仍运行 <code>python example_infer.py</code>。</p>
+</details>
+<p><a id="references"></a></p>
+<h2 id="_2">本次实验的依据</h2>
+<p>模型版本固定为 <code>7ae557604adf67be50417f59c2c2f167def9a775</code>。两次完整输入和输出保存在包内的 <code>terminal-recordings.json</code>；其中的进程耗时包含导入与加载，不是推理性能基准。</p>
+<p>参考：<a href="https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct">模型说明</a>、<a href="https://huggingface.co/docs/transformers/main/en/chat_templating">Transformers 对话模板</a>、<a href="https://pytorch.org/get-started/locally/">PyTorch 安装说明</a>。</p>
+<p>下一次实验，再拆开看看一句话经过分词器后变成了什么。</p></article>
+    </div>
+    <section class="next-experiment"><div><p class="eyebrow">NEXT EXPERIMENT</p><h2>一句话，究竟被切成了什么？</h2><p>跑通这次实验后，我们再从分词器开始。</p></div><span aria-hidden="true">02</span></section>
+  </main>
+  <footer class="site-footer"><span>Mini 的模型推理工程师之路</span><div><a href="../">课程目录</a><a href="../downloads/README.md">下载文字教程</a><a href="https://github.com/newbdez33/mini-inference-lab">查看源代码 ↗</a></div></footer>
+  <div id="copy-status" class="sr-only" role="status" aria-live="polite"></div>
+</body>
+</html>
