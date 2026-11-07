@@ -1,0 +1,54 @@
+{
+  "capturedAt": "2026-11-07T09:00:38.935058+00:00",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "driver": "621.14",
+  "dtype": "float32",
+  "maxNewTokens": 64,
+  "doSample": false,
+  "runs": [
+    {
+      "device": "cuda",
+      "command": "python example_infer.py --device cuda",
+      "input": "请用一句话解释什么是人工智能。",
+      "answer": "人工智能是一种模拟人类智能的理论与技术，能够使机器在执行任务时表现出与人类相似或超越人类的能力。它包括了机器学习、深度学习、自然语言处理等多个领域，并且正在逐渐渗透到我们的日常生活中。",
+      "stdout": "Prompt: Loading Qwen/Qwen2.5-0.5B-Instruct on CUDA (float32)...\nGenerating...\nAnswer:\n人工智能是一种模拟人类智能的理论与技术，能够使机器在执行任务时表现出与人类相似或超越人类的能力。它包括了机器学习、深度学习、自然语言处理等多个领域，并且正在逐渐渗透到我们的日常生活中。\n",
+      "environment": {
+        "os": "Windows",
+        "python": "3.12.7",
+        "torch": "2.15.0+cu132",
+        "transformers": "5.22.1",
+        "cudaAvailable": true
+      }
+    },
+    {
+      "device": "cuda",
+      "command": "python example_infer.py --device cuda",
+      "input": "用一句话介绍猫。",
+      "answer": "猫，以其优雅的外表、温顺的性格和多才多艺的生活方式，成为了许多人喜爱的宠物之一。",
+      "stdout": "Prompt: Loading Qwen/Qwen2.5-0.5B-Instruct on CUDA (float32)...\nGenerating...\nAnswer:\n猫，以其优雅的外表、温顺的性格和多才多艺的生活方式，成为了许多人喜爱的宠物之一。\n",
+      "environment": {
+        "os": "Windows",
+        "python": "3.12.7",
+        "torch": "2.15.0+cu132",
+        "transformers": "5.22.1",
+        "cudaAvailable": true
+      }
+    },
+    {
+      "device": "cpu",
+      "command": "python example_infer.py",
+      "input": "用一句话介绍猫。",
+      "answer": "猫，以其优雅的外表、温顺的性格和多才多艺的生活方式，成为了许多人喜爱的宠物之一。",
+      "stdout": "Prompt: Loading Qwen/Qwen2.5-0.5B-Instruct on CPU (float32)...\nGenerating...\nAnswer:\n猫，以其优雅的外表、温顺的性格和多才多艺的生活方式，成为了许多人喜爱的宠物之一。\n",
+      "environment": {
+        "os": "Windows",
+        "python": "3.12.7",
+        "torch": "2.15.0+cpu",
+        "transformers": "5.22.1",
+        "cudaAvailable": false
+      }
+    }
+  ]
+}

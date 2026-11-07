@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#131b23">
-  <meta name="description" content="Mini 的第一个模型推理实验：下载实验包，准备 Python，在 CPU 上运行小模型，再换一个问题。">
+  <meta name="description" content="Mini 的第一个模型推理实验：下载实验包，准备 Python，在 CPU 或 NVIDIA GPU 上运行小模型，再换一个问题。">
   <title>{{TITLE}} · Mini 的模型推理工程师之路</title>
   <link rel="canonical" href="https://newbdez33.github.io/mini-inference-lab/1/">
   <link rel="icon" href="../assets/mini-head.png" type="image/png">
@@ -38,9 +38,16 @@
             <button type="button" role="radio" data-platform="linux" aria-checked="false" tabindex="-1">Linux</button>
           </div>
         </div>
+        <div class="device-switcher" hidden>
+          <span id="device-label">运行设备</span>
+          <div class="device-options" role="radiogroup" aria-labelledby="device-label">
+            <button type="button" role="radio" data-device="cpu" aria-checked="true">CPU</button>
+            <button type="button" role="radio" data-device="cuda" aria-checked="false" tabindex="-1">GPU · NVIDIA CUDA</button>
+          </div>
+        </div>
         <p class="experiment-time"><strong>预计 10–15 分钟</strong><span>首次安装与下载等待另计</span></p>
         <div class="hero-actions"><a class="button" href="../downloads/mini-lab-01.zip" download>下载实验包 <span aria-hidden="true">↓</span></a><a class="secondary-link" href="#download">一步一步开始 →</a></div>
-        <ul class="tags" aria-label="实验环境"><li>Python</li><li>CPU</li></ul>
+        <ul class="tags" aria-label="实验环境"><li>Python</li><li data-device-label>CPU</li></ul>
       </div>
       <div class="lab-sample lesson-sample" aria-label="本次实验的真实输出示例">
         <div class="sample-label"><span>本次实验 / 输出示例</span><span aria-hidden="true">↙</span></div>

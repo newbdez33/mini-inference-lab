@@ -72,22 +72,40 @@ const platforms = [
   {id: "windows", label: "Windows"},
   {id: "linux", label: "Linux"},
 ];
+const devices = [
+  {id: "cpu", label: "CPU"},
+  {id: "cuda", label: "GPU · NVIDIA CUDA"},
+];
 let selectedPlatform = "macos";
+let selectedDevice = "cpu";
 try {
   const saved = localStorage.getItem("mini-inference-platform");
   if (platforms.some(platform => platform.id === saved)) selectedPlatform = saved;
+  const savedDevice = localStorage.getItem("mini-inference-device");
+  if (devices.some(device => device.id === savedDevice)) selectedDevice = savedDevice;
 } catch {}
 
 const platformGroups = [];
-const platformPanels = [...document.querySelectorAll(".tutorial [data-platforms]")];
+const environmentPanels = [...document.querySelectorAll(".tutorial [data-platforms], .tutorial [data-devices]")];
 const platformSwitcher = document.querySelector(".platform-switcher");
 const platformRadios = [...document.querySelectorAll(".platform-options [data-platform]")];
+const deviceSwitcher = document.querySelector(".device-switcher");
+const deviceRadios = [...document.querySelectorAll(".device-options [data-device]")];
 
-function selectPlatform(platform) {
-  selectedPlatform = platform;
-  const platformLabel = platforms.find(item => item.id === platform).label;
-  for (const panel of platformPanels) {
-    panel.hidden = !panel.dataset.platforms.split(" ").includes(platform);
+function effectiveDevice() {
+  return selectedPlatform === "macos" ? "cpu" : selectedDevice;
+}
+
+function matchesEnvironment(panel) {
+  return (!panel.dataset.platforms || panel.dataset.platforms.split(" ").includes(selectedPlatform)) &&
+    (!panel.dataset.devices || panel.dataset.devices.split(" ").includes(effectiveDevice()));
+}
+
+function updateEnvironment() {
+  const platformLabel = platforms.find(item => item.id === selectedPlatform).label;
+  const device = effectiveDevice();
+  for (const panel of environmentPanels) {
+    panel.hidden = !matchesEnvironment(panel);
   }
   for (const group of platformGroups) {
     const code = group.getCode();
@@ -95,16 +113,28 @@ function selectPlatform(platform) {
     updateCopyButton(group.copyButton, code);
   }
   for (const radio of platformRadios) {
-    const selected = radio.dataset.platform === platform;
+    const selected = radio.dataset.platform === selectedPlatform;
     radio.setAttribute("aria-checked", String(selected));
     radio.tabIndex = selected ? 0 : -1;
   }
-  try { localStorage.setItem("mini-inference-platform", platform); } catch {}
+  for (const radio of deviceRadios) {
+    const selected = radio.dataset.device === device;
+    radio.setAttribute("aria-checked", String(selected));
+    radio.tabIndex = selected ? 0 : -1;
+  }
+  if (deviceSwitcher) deviceSwitcher.hidden = selectedPlatform === "macos";
+  for (const label of document.querySelectorAll("[data-device-label]")) {
+    label.textContent = devices.find(item => item.id === device).label;
+  }
+  try {
+    localStorage.setItem("mini-inference-platform", selectedPlatform);
+    localStorage.setItem("mini-inference-device", selectedDevice);
+  } catch {}
 }
 
-function bindPlatformControls(buttons) {
+function bindChoiceControls(buttons, select) {
   for (const [index, button] of buttons.entries()) {
-    button.addEventListener("click", () => selectPlatform(button.dataset.platform));
+    button.addEventListener("click", () => select(button));
     button.addEventListener("keydown", event => {
       let next;
       if (event.key === "ArrowRight" || event.key === "ArrowDown") next = (index + 1) % buttons.length;
@@ -113,7 +143,7 @@ function bindPlatformControls(buttons) {
       else if (event.key === "End") next = buttons.length - 1;
       else return;
       event.preventDefault();
-      selectPlatform(buttons[next].dataset.platform);
+      select(buttons[next]);
       buttons[next].focus();
     });
   }
@@ -139,15 +169,22 @@ for (const [index, group] of [...document.querySelectorAll(".platform-commands")
     panel.querySelector("pre").tabIndex = 0;
     formatCommand(panel.querySelector("code"));
   }
-  const getCode = () => panels.find(panel => panel.dataset.platforms.split(" ").includes(selectedPlatform)).querySelector("code");
+  const getCode = () => panels.find(matchesEnvironment).querySelector("code");
   const copyButton = createCopyButton(getCode);
   toolbar.append(title, copyButton);
   group.prepend(toolbar);
   group.classList.add("code-block", "command-block", "is-enhanced");
   platformGroups.push({label, getCode, copyButton});
 }
-bindPlatformControls(platformRadios);
-selectPlatform(selectedPlatform);
+bindChoiceControls(platformRadios, button => {
+  selectedPlatform = button.dataset.platform;
+  updateEnvironment();
+});
+bindChoiceControls(deviceRadios, button => {
+  selectedDevice = button.dataset.device;
+  updateEnvironment();
+});
+updateEnvironment();
 if (platformSwitcher) platformSwitcher.hidden = false;
 
 for (const pre of document.querySelectorAll(".tutorial pre")) {

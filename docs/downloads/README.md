@@ -4,7 +4,18 @@
 
 **预计用时：10–15 分钟。** 包括阅读步骤和动手操作；首次安装 Python、安装依赖及下载模型的等待时间另计。
 
-**本篇使用 Python 和 CPU，无需独立显卡。** 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。在页面顶部选择 macOS、Windows 或 Linux，整页命令会一起切换。点击命令块右上角的“复制命令”，即可粘贴到终端。Windows 请使用 PowerShell，macOS 和 Linux 使用终端。
+**本篇使用 Python，默认在 CPU 上运行；Windows 和 Linux 可选 NVIDIA GPU。** 首次运行要联网下载依赖和模型，等待时间取决于设备与网络。在页面顶部选择系统和运行设备，安装、检查和运行命令会一起切换。点击命令块右上角的“复制命令”，即可粘贴到终端。Windows 请使用 PowerShell，macOS 和 Linux 使用终端。
+
+<div data-platforms="macos" markdown="1">
+
+**macOS：** 本实验使用 CPU，无需选择运行设备。
+
+</div>
+<div data-platforms="windows linux" data-devices="cuda" markdown="1">
+
+**GPU 模式：** 需要受 [PyTorch 2.15 支持](https://github.com/pytorch/pytorch/blob/v2.15.0/RELEASE.md#release-compatibility-matrix)的 NVIDIA 显卡，以及支持 CUDA 13.2 的驱动。不确定是否支持时，先选 CPU 完成实验。
+
+</div>
 
 <a id="download"></a>
 
@@ -128,28 +139,54 @@ python -m pip install -r requirements.txt
 ```
 
 </div>
-<div data-platforms="windows" markdown="1">
+<div data-platforms="windows" data-devices="cpu" markdown="1">
 
-**Windows · PowerShell**
+**Windows · PowerShell · CPU**
 
 ```powershell
-python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+python -m pip install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
 python -m pip install -r requirements.txt
 ```
 
 先安装 CPU 版 PyTorch，再安装其余依赖。
 
 </div>
-<div data-platforms="linux" markdown="1">
+<div data-platforms="linux" data-devices="cpu" markdown="1">
 
-**Linux**
+**Linux · CPU**
 
 ```sh
-python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+python -m pip install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu
 python -m pip install -r requirements.txt
 ```
 
 先安装 CPU 版 PyTorch，再安装其余依赖。
+
+</div>
+<div data-platforms="windows" data-devices="cuda" markdown="1">
+
+**Windows · PowerShell · NVIDIA GPU**
+
+```powershell
+nvidia-smi
+python -m pip install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
+python -m pip install -r requirements.txt
+```
+
+先确认第一条命令能显示 NVIDIA 显卡和驱动信息，再安装 CUDA 版 PyTorch。更换 CPU／GPU 选项后，需要重新执行对应的安装命令。
+
+</div>
+<div data-platforms="linux" data-devices="cuda" markdown="1">
+
+**Linux · NVIDIA GPU**
+
+```sh
+nvidia-smi
+python -m pip install torch==2.15.0+cu132 --index-url https://download.pytorch.org/whl/cu132
+python -m pip install -r requirements.txt
+```
+
+先确认第一条命令能显示 NVIDIA 显卡和驱动信息，再安装 CUDA 版 PyTorch。更换 CPU／GPU 选项后，需要重新执行对应的安装命令。
 
 </div>
 </div>
@@ -157,7 +194,7 @@ python -m pip install -r requirements.txt
 等安装结束、终端重新出现提示符后，再检查两个主要库：
 
 <div class="platform-commands" markdown="1">
-<div data-platforms="macos linux" markdown="1">
+<div data-platforms="macos linux" data-devices="cpu" markdown="1">
 
 **macOS · Linux**
 
@@ -166,7 +203,7 @@ python -c "import torch, transformers; print(torch.__version__); print(transform
 ```
 
 </div>
-<div data-platforms="windows" markdown="1">
+<div data-platforms="windows" data-devices="cpu" markdown="1">
 
 **Windows · PowerShell**
 
@@ -175,9 +212,35 @@ python -c "import torch, transformers; print(torch.__version__); print(transform
 ```
 
 </div>
+<div data-platforms="windows" data-devices="cuda" markdown="1">
+
+**Windows · PowerShell · NVIDIA GPU**
+
+```powershell
+python -c "import torch, transformers; print(torch.__version__); print(transformers.__version__)"
+python -c "import torch; print('CUDA:', torch.cuda.is_available()); print(torch.ones(1, device='cuda')); print(torch.cuda.get_device_name(0))"
+```
+
+</div>
+<div data-platforms="linux" data-devices="cuda" markdown="1">
+
+**Linux · NVIDIA GPU**
+
+```sh
+python -c "import torch, transformers; print(torch.__version__); print(transformers.__version__)"
+python -c "import torch; print('CUDA:', torch.cuda.is_available()); print(torch.ones(1, device='cuda')); print(torch.cuda.get_device_name(0))"
+```
+
+</div>
 </div>
 
 **完成检查：** 能打印 PyTorch 和 Transformers 的版本号，没有导入错误。实验包固定使用 PyTorch 2.15.0、Transformers 5.22.1 和 Jinja2 3.1.6。
+
+<div data-platforms="windows linux" data-devices="cuda" markdown="1">
+
+**GPU 检查：** 还要看到 `CUDA: True`、带 `device='cuda:0'` 的张量和显卡名称，且没有报错。只看到 `nvidia-smi` 成功还不够。检查失败时，先修复驱动或改选 CPU，并重新安装对应依赖。
+
+</div>
 
 `requirements.txt` 就在当前目录中，安装命令会读取它。它不会被自动下载，也不需要你另行创建。
 
@@ -188,21 +251,39 @@ python -c "import torch, transformers; print(torch.__version__); print(transform
 运行刚才下载的完整脚本：
 
 <div class="platform-commands" markdown="1">
-<div data-platforms="macos linux" markdown="1">
+<div data-platforms="macos linux" data-devices="cpu" markdown="1">
 
-**macOS · Linux**
+**macOS · Linux · CPU**
 
 ```sh
 python example_infer.py
 ```
 
 </div>
-<div data-platforms="windows" markdown="1">
+<div data-platforms="windows" data-devices="cpu" markdown="1">
 
-**Windows · PowerShell**
+**Windows · PowerShell · CPU**
 
 ```powershell
 python example_infer.py
+```
+
+</div>
+<div data-platforms="windows" data-devices="cuda" markdown="1">
+
+**Windows · PowerShell · NVIDIA GPU**
+
+```powershell
+python example_infer.py --device cuda
+```
+
+</div>
+<div data-platforms="linux" data-devices="cuda" markdown="1">
+
+**Linux · NVIDIA GPU**
+
+```sh
+python example_infer.py --device cuda
 ```
 
 </div>
@@ -216,7 +297,7 @@ python example_infer.py
 
 脚本会加载 `Qwen/Qwen2.5-0.5B-Instruct`。第一次需要从 Hugging Face 下载模型；后续复用缓存。看到 `Loading` 或下载进度时，先等待，不要重复启动脚本。
 
-模型加载好后会出现 `Generating...`，然后是 `Answer:`。这是我们实际运行得到的一次回答：
+加载信息会显示本次使用的 `CPU` 或 `CUDA`。模型加载好后会出现 `Generating...`，然后是 `Answer:`。这是我们在 CPU 上实际运行得到的一次回答：
 
 > 人工智能是一种模拟人类智能的理论与技术，能够使机器在执行任务时表现出与人类相似或超越人类的能力。它包括了机器学习、深度学习、自然语言处理等多个领域，并且正在逐渐渗透到我们的日常生活中。
 
@@ -233,21 +314,39 @@ python example_infer.py
 仍然在同一个终端、同一个目录里，执行同一条命令：
 
 <div class="platform-commands" markdown="1">
-<div data-platforms="macos linux" markdown="1">
+<div data-platforms="macos linux" data-devices="cpu" markdown="1">
 
-**macOS · Linux**
+**macOS · Linux · CPU**
 
 ```sh
 python example_infer.py
 ```
 
 </div>
-<div data-platforms="windows" markdown="1">
+<div data-platforms="windows" data-devices="cpu" markdown="1">
 
-**Windows · PowerShell**
+**Windows · PowerShell · CPU**
 
 ```powershell
 python example_infer.py
+```
+
+</div>
+<div data-platforms="windows" data-devices="cuda" markdown="1">
+
+**Windows · PowerShell · NVIDIA GPU**
+
+```powershell
+python example_infer.py --device cuda
+```
+
+</div>
+<div data-platforms="linux" data-devices="cuda" markdown="1">
+
+**Linux · NVIDIA GPU**
+
+```sh
+python example_infer.py --device cuda
 ```
 
 </div>
@@ -259,7 +358,7 @@ python example_infer.py
 用一句话介绍猫。
 ```
 
-模型和生成设置都不改。我们实际得到的回答是：
+模型、运行设备和生成设置都不改。我们在 CPU 上实际得到的回答是：
 
 > 猫，以其优雅的外表、温顺的性格和多才多艺的生活方式，成为了许多人喜爱的宠物之一。
 
@@ -279,7 +378,7 @@ python example_infer.py
 
 本集不修改这些代码。先记住这条顺序：**问题 → 模型输入 → 生成结果 → 文字回答。**
 
-这里使用 CPU、float32，关闭采样，最多生成 64 个新 token。每次运行都会重新加载模型。这次验证的是流程，不比较性能，也不保证两台电脑的输出逐字相同。
+CPU 和 GPU 路径都使用 float32，关闭采样，最多生成 64 个新 token。脚本会把模型和输入放到所选设备，每次运行都会重新加载模型。这次验证的是流程，不比较性能，也不保证不同设备的输出逐字相同。
 
 <a id="help"></a>
 
@@ -289,11 +388,17 @@ python example_infer.py
 | --- | --- |
 | 找不到 `python` 命令 | 回到“先确认 Python 能用”，确认安装和命令搜索路径，再检查版本。 |
 | `requirements.txt` 或脚本找不到 | 回到“在实验目录打开终端”，确认解压目录和文件名。不要新建空文件来绕过错误。 |
-| `ModuleNotFoundError` | 回到“安装实验依赖”，确认顶部选对系统，再用同一个 `python -m pip` 安装依赖。 |
+| `ModuleNotFoundError` | 回到“安装实验依赖”，确认顶部选对系统和运行设备，再用同一个 `python -m pip` 安装依赖。 |
 | 安装失败，或版本检查失败 | 先确认 Python 版本符合上方要求，再检查网络和完整报错。 |
 | 模型下载失败 | 检查能否访问模型页面，再运行同一条命令；已有缓存通常可以复用。 |
-| 一直显示加载或下载进度 | 首次下载和 CPU 推理可能需要等待；没有报错时先让当前进程完成。 |
+| 一直显示加载或下载进度 | 首次下载和推理可能需要等待；没有报错时先让当前进程完成。 |
 | 内存不足 | 关闭其他占用内存的程序后重试。 |
+
+<div data-platforms="windows linux" data-devices="cuda" markdown="1">
+
+**GPU 相关错误：** `CUDA is not available` 时，检查 NVIDIA 驱动和 CUDA 版 PyTorch；出现 `no kernel image` 时，检查显卡是否在当前版本的支持范围内。出现 `CUDA out of memory` 时，先关闭其他占用显存的程序。也可以在顶部改选 CPU，重新执行对应的安装、检查和运行命令。
+
+</div>
 
 如果需要反馈问题，保留操作系统、Python 版本、执行的命令和完整报错；在 [仓库的 Issues](https://github.com/newbdez33/mini-inference-lab/issues) 中描述卡在哪一步。
 
@@ -302,10 +407,12 @@ python example_infer.py
 
 ## 本次实验的依据
 
-示例输出采集于 macOS、Apple Silicon、Python 3.12、CPU；本篇流程另用本机默认的 Python 3.14 验证通过。Windows、Linux 和 Intel Mac 尚未在本次实验中实测。Python 最低版本要求来自固定依赖的发布说明：[PyTorch](https://pypi.org/project/torch/2.15.0/)、[Transformers](https://pypi.org/project/transformers/5.22.1/)。
+示例输出采集于 macOS、Apple Silicon、Python 3.12、CPU；本篇流程另用本机默认的 Python 3.14 验证通过。Windows 已用 Python 3.12、NVIDIA RTX 4090 和 CUDA 版 PyTorch 跑通两次提问，并验证切换到 CPU 版后的推理。Linux 和 Intel Mac 尚未在本次实验中实测。Python 最低版本要求来自固定依赖的发布说明：[PyTorch](https://pypi.org/project/torch/2.15.0/)、[Transformers](https://pypi.org/project/transformers/5.22.1/)。
+
+Windows 的依赖版本、设备和回答见 [CPU／GPU 验证记录](https://github.com/newbdez33/mini-inference-lab/blob/main/episode-01/device-validation.json)。
 
 模型版本固定为 `7ae557604adf67be50417f59c2c2f167def9a775`。两次完整输入、输出及环境信息保存在仓库的[实际运行记录](https://github.com/newbdez33/mini-inference-lab/blob/main/episode-01/terminal-recordings.json)中，无需下载或运行该文件。其中的进程耗时包含导入与加载，不是推理性能基准。
 
-参考：[模型说明](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct)、[Transformers 对话模板](https://huggingface.co/docs/transformers/main/en/chat_templating)、[PyTorch 安装说明](https://pytorch.org/get-started/locally/)。
+参考：[模型说明](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct)、[Transformers 对话模板](https://huggingface.co/docs/transformers/main/en/chat_templating)、[PyTorch 安装说明](https://pytorch.org/get-started/locally/)、[PyTorch 2.15 兼容性说明](https://github.com/pytorch/pytorch/blob/v2.15.0/RELEASE.md#release-compatibility-matrix)。
 
 下一次实验，再拆开看看一句话经过分词器后变成了什么。

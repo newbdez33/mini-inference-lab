@@ -6,13 +6,13 @@
 
 | 实验 | 这次做什么 | 预计用时 | 下载 |
 | --- | --- | --- | --- |
-| [01 · 跑通第一次模型推理](https://newbdez33.github.io/mini-inference-lab/1/) | 在 CPU 上运行一个小模型，再换一个问题。 | 10–15 分钟 | [mini-lab-01.zip](https://github.com/newbdez33/mini-inference-lab/raw/refs/heads/main/packages/mini-lab-01.zip) |
+| [01 · 跑通第一次模型推理](https://newbdez33.github.io/mini-inference-lab/1/) | 在 CPU 或 NVIDIA GPU 上运行一个小模型，再换一个问题。 | 10–15 分钟 | [mini-lab-01.zip](https://github.com/newbdez33/mini-inference-lab/raw/refs/heads/main/packages/mini-lab-01.zip) |
 
 预计用时包括阅读和动手操作，首次安装与下载的等待时间另计。
 
 实验包解压后自带 `mini-lab-01` 文件夹，只包含运行脚本和依赖清单。操作说明与示例回答见网页教程，无需自己新建目录或编写 `requirements.txt`。
 
-教程提供 macOS、Windows 和 Linux 的命令，在页面顶部统一切换平台；验证范围在文末说明。
+教程提供 macOS、Windows 和 Linux 的命令，在页面顶部统一切换平台。Windows 和 Linux 还可选择 CPU 或 NVIDIA GPU；macOS 使用 CPU，不显示设备选择。验证范围在文末说明。
 
 ## 更新教程
 

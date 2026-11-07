@@ -142,13 +142,13 @@ h1, h2, h3, p { margin-top: 0; }
 .lesson-hero .eyebrow { color: var(--pink); margin-bottom: 16px; }
 .lesson-hero h1 { font-family: "Noto Sans SC", var(--font-sans); font-size: clamp(32px, 3.3vw, 44px); font-weight: 400; line-height: 1.5; letter-spacing: -.8px; margin: 0; text-wrap: balance; }
 .hero-description { color: var(--muted); font-size: 16px; line-height: 1.9; margin: 20px 0; }
-.platform-switcher { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 20px 0; }
-.platform-switcher[hidden] { display: none; }
-.platform-switcher > span { color: var(--muted); font-size: 14px; }
-.platform-options { display: inline-flex; gap: 3px; padding: 4px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface-inset); }
-.platform-options button { border: 0; border-radius: 5px; background: transparent; color: var(--muted); padding: 7px 12px; min-height: 36px; font: 500 14px/1.5 var(--font-sans); }
-.platform-options button[aria-checked="true"] { color: var(--accent); background: var(--soft); box-shadow: inset 0 0 0 1px var(--feature-border); }
-.platform-options button:hover { color: var(--ink); }
+.platform-switcher, .device-switcher { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 20px 0; }
+.platform-switcher[hidden], .device-switcher[hidden] { display: none; }
+.platform-switcher > span, .device-switcher > span { color: var(--muted); font-size: 14px; }
+.platform-options, .device-options { display: inline-flex; gap: 3px; padding: 4px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface-inset); }
+.platform-options button, .device-options button { border: 0; border-radius: 5px; background: transparent; color: var(--muted); padding: 7px 12px; min-height: 36px; font: 500 14px/1.5 var(--font-sans); }
+.platform-options button[aria-checked="true"], .device-options button[aria-checked="true"] { color: var(--accent); background: var(--soft); box-shadow: inset 0 0 0 1px var(--feature-border); }
+.platform-options button:hover, .device-options button:hover { color: var(--ink); }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 24px; }
 .secondary-link { color: var(--accent); font-size: 14px; text-decoration: none; }
 .lesson-hero .tags { margin: 24px 0 0; }
@@ -196,7 +196,7 @@ pre code.language-text:not(.file-tree) { font: 16px/1.85 var(--font-sans); }
 .platform-commands.is-enhanced .platform-label { display: none; }
 .platform-commands.is-enhanced > [data-platforms] > p { margin: 0; padding: 0 22px 18px; color: #bac9d5; font-size: 14px; line-height: 1.8; }
 .platform-commands.is-enhanced > [data-platforms] > p code { color: #a4e5ce; background: #18242e; }
-.tutorial [data-platforms][hidden] { display: none; }
+.tutorial [data-platforms][hidden], .tutorial [data-devices][hidden] { display: none; }
 .tutorial table { border-collapse: collapse; width: 100%; margin: 24px 0; font-size: 14px; line-height: 1.85; }
 .tutorial th, .tutorial td { border-bottom: 1px solid var(--line); padding: 14px; text-align: left; vertical-align: top; }
 .tutorial th { font-weight: 500; background: var(--surface); }

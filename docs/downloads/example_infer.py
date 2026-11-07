@@ -1,5 +1,6 @@
-"""Run one CPU inference experiment with a small chat model."""
+"""Run one CPU or CUDA inference experiment with a small chat model."""
 
+import argparse
 import sys
 
 
@@ -7,7 +8,11 @@ MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
 MODEL_REVISION = "7ae557604adf67be50417f59c2c2f167def9a775"
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu", help="Inference device (default: cpu).")
+    args = parser.parse_args(argv)
+
     try:
         question = input("Prompt: ").strip()
     except EOFError:
@@ -18,13 +23,22 @@ def main() -> int:
         return 2
 
     import torch
+
+    if args.device == "cuda" and not torch.cuda.is_available():
+        print(
+            "CUDA is not available. Check the NVIDIA driver and CUDA build of PyTorch, "
+            "or run again with --device cpu.",
+            file=sys.stderr,
+        )
+        return 2
+
     from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
 
-    print(f"Loading {MODEL_ID} on CPU (float32)...", flush=True)
+    print(f"Loading {MODEL_ID} on {args.device.upper()} (float32)...", flush=True)
     tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, revision=MODEL_REVISION)
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID, revision=MODEL_REVISION, dtype=torch.float32
-    ).to("cpu")
+    ).to(args.device)
     model.eval()
 
     messages = [{"role": "user", "content": question}]
@@ -34,7 +48,7 @@ def main() -> int:
         add_generation_prompt=True,
         return_dict=True,
         return_tensors="pt",
-    )
+    ).to(args.device)
 
     # Keep model-specific sampling defaults out of this greedy experiment.
     generation = GenerationConfig(
