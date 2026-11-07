@@ -1,38 +1,75 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f6ef">
+  <meta name="theme-color" content="#131b23">
   <meta name="description" content="Mini 的模型推理工程师之路：一次一个小实验，图文教程、运行代码与实验包。">
   <title>课程目录 · Mini 的模型推理工程师之路</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css?v=75980ca9693e">
+  <link rel="canonical" href="https://newbdez33.github.io/mini-inference-lab/">
+  <link rel="icon" href="assets/mini-head.png" type="image/png">
+  <link rel="preload" href="assets/fonts/noto-sans-sc-lab.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="assets/theme.js?v=ef3ef90701ad"></script>
+  <link rel="stylesheet" href="assets/site.css?v=29868e59d296">
 </head>
 <body class="catalog-page">
-  <a class="skip-link" href="#lessons">跳到课程目录</a>
+  <a class="skip-link" href="#catalog">跳到实验目录</a>
   <header class="site-header">
-    <a class="brand" href="./" aria-label="Mini Inference Lab 首页"><span class="brand-mark">m<span>✳</span></span><span>Mini<span class="brand-sub">INFERENCE LAB</span></span></a>
-    <span class="series-name">模型推理工程师之路</span>
-    <a class="repository-link" href="https://github.com/newbdez33/mini-inference-lab">GitHub ↗</a>
+    <a class="brand" href="./" aria-label="Mini Inference Lab 首页"><span class="avatar"><img src="assets/mini-head.png" alt="" width="56" height="56"></span><span>mini<span class="brand-sub">INFERENCE LAB</span></span></a>
+    <nav aria-label="主导航">
+      <a class="nav-catalog" href="#catalog" aria-current="page">实验目录</a>
+      <a class="nav-roadmap" href="#roadmap">学习路径</a>
+      <a class="nav-github" href="https://github.com/newbdez33/mini-inference-lab" target="_blank" rel="noopener">GitHub ↗</a>
+      <button class="theme-toggle" type="button" aria-label="切换为浅色主题"><span data-theme-icon aria-hidden="true">☼</span><span data-theme-label>浅色</span></button>
+    </nav>
   </header>
-  <main>
-    <section class="catalog-intro" aria-labelledby="page-title">
-      <p class="eyebrow">MINI INFERENCE LAB <span>／</span> 课程目录</p>
-      <h1 id="page-title">模型推理工程师之路<span>。</span></h1>
-      <p class="hero-description">一次一个主题，从能跑通的小实验开始。<br>跟着图文教程动手，再看结果为什么会这样。</p>
-      <p class="catalog-route">本地推理 <span>→</span> 模型服务 <span>→</span> 并发压测 <span>→</span> 性能优化 <span>→</span> 生产部署</p>
+  <main class="lab-layout">
+    <section class="lab-hero" aria-labelledby="page-title">
+      <div class="lab-hero-copy">
+        <p class="eyebrow"><span class="hero-dot" aria-hidden="true"></span> 小实验，慢慢积累大能力</p>
+        <h1 id="page-title"><span class="title-phrase">模型推理</span><wbr><span class="title-phrase">工程师之路<span class="accent">。</span></span></h1>
+        <p>一次一个主题，跟着 Mini 把模型跑起来。<br>从本地推理，到你自己的模型服务。</p>
+      </div>
+      <div class="lab-sample">
+        <div class="sample-label"><span>第一次实验 / 输出示例</span><span aria-hidden="true">↙</span></div>
+        <p class="sample-question">“请用一句话解释什么是人工智能。”</p>
+        <div class="sample-answer"><span class="model-symbol" aria-hidden="true">AI</span><p>人工智能是一种模拟人类智能的理论与技术，能够使机器在执行任务时表现出与人类相似或超越人类的能力。它包括了机器学习、深度学习、自然语言处理等多个领域，并且正在逐渐渗透到我们的日常生活中。</p></div>
+        <span class="sample-model">Qwen2.5-0.5B-Instruct · CPU</span>
+      </div>
     </section>
-    <section id="lessons" class="lesson-list" aria-labelledby="lesson-list-title">
-      <div class="lesson-list-heading"><h2 id="lesson-list-title">从第一课开始</h2><p>每课附运行代码与实验包</p></div>
-      <article class="lesson-card">
-        <span class="lesson-number" aria-hidden="true">01</span>
-        <div class="lesson-description"><p class="eyebrow">基础推理 ／ 实验 01</p><h3><a href="ep1/">跑通第一次模型推理</a></h3><p>在自己的电脑上运行一个小模型，再只换一个问题，观察回答的变化。</p><p class="experiment-time"><strong>预计 10–15 分钟</strong><span>首次安装与下载等待另计</span></p><ul class="lesson-tags" aria-label="实验环境"><li>Mac · M 系列</li><li>Python 3.12</li><li>CPU</li></ul></div>
-        <a class="lesson-entry" href="ep1/" aria-label="进入第 1 课：跑通第一次模型推理">进入第 1 课 <span aria-hidden="true">→</span></a>
+    <section id="catalog" class="lab-catalog" aria-labelledby="catalog-title">
+      <div class="section-label"><div><p class="eyebrow">THE EXPERIMENTS</p><h2 id="catalog-title">选一个实验，开始动手。</h2></div><span>目前开放 1 个实验</span></div>
+      <article class="lab-feature">
+        <div class="lab-feature-copy">
+          <div class="feature-eyebrow"><span class="chapter-label">基础推理</span><span class="status-dot">已开放</span></div>
+          <p class="feature-number">EXPERIMENT 01</p>
+          <h3>跑通第一次模型推理</h3>
+          <p class="lesson-copy">加载一个小模型，问它第一个问题。<br>换个提问，观察模型的回答。</p>
+          <p class="experiment-time"><strong>预计 10–15 分钟</strong><span>首次安装与下载等待另计</span></p>
+          <ul class="tags" aria-label="实验环境"><li>Mac · M 系列</li><li>Python 3.12</li><li>CPU</li></ul>
+          <a class="button" href="1/">开始第一个实验 <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="lab-recipe">
+          <span class="recipe-title">这次你会做什么</span>
+          <ol>
+            <li><span>01</span><div><strong>准备实验包</strong><p>下载文件，配置 Python 环境。</p></div></li>
+            <li><span>02</span><div><strong>运行一个模型</strong><p>输入问题，得到第一次回答。</p></div></li>
+            <li><span>03</span><div><strong>换个问题看看</strong><p>只改提问，再读懂背后的代码。</p></div></li>
+          </ol>
+          <p class="recipe-bottom">图文教程 · 完整代码 · 可下载实验包</p>
+        </div>
       </article>
-      <p class="catalog-note">后续实验会继续加入这里。先完成这一课，我们再往前走。</p>
+    </section>
+    <section id="roadmap" class="lab-roadmap" aria-labelledby="roadmap-title">
+      <div class="planned-heading"><h2 id="roadmap-title">接下来的学习路径</h2><span>计划方向 · 每个方向会拆成多个实验</span></div>
+      <div class="path-grid">
+        <article><div class="path-top"><span class="path-icon" aria-hidden="true">↗</span><span>计划中</span></div><h3>模型服务</h3><p>vLLM 接口与流式回答</p></article>
+        <article><div class="path-top"><span class="path-icon" aria-hidden="true">∥</span><span>计划中</span></div><h3>并发压测</h3><p>看清延迟、速度和吞吐</p></article>
+        <article><div class="path-top"><span class="path-icon" aria-hidden="true">＋</span><span>计划中</span></div><h3>推理优化</h3><p>批处理、缓存与量化</p></article>
+        <article><div class="path-top"><span class="path-icon" aria-hidden="true">⌁</span><span>计划中</span></div><h3>生产部署</h3><p>容器、监控与故障恢复</p></article>
+      </div>
     </section>
   </main>
-  <footer class="site-footer"><span>Mini 的模型推理工程师之路</span><div><a href="https://github.com/newbdez33/mini-inference-lab">查看源代码 ↗</a></div></footer>
+  <footer class="site-footer"><span>Mini 的模型推理工程师之路</span><a href="https://github.com/newbdez33/mini-inference-lab" target="_blank" rel="noopener">在 GitHub 查看实验代码 ↗</a></footer>
 </body>
 </html>

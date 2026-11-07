@@ -6,7 +6,7 @@
 
 | 实验 | 这次做什么 | 预计用时 | 下载 |
 | --- | --- | --- | --- |
-| [01 · 跑通第一次模型推理](https://newbdez33.github.io/mini-inference-lab/ep1/) | 在 CPU 上运行一个小模型，再换一个问题。 | 10–15 分钟 | [mini-lab-01.zip](https://github.com/newbdez33/mini-inference-lab/raw/refs/heads/main/packages/mini-lab-01.zip) |
+| [01 · 跑通第一次模型推理](https://newbdez33.github.io/mini-inference-lab/1/) | 在 CPU 上运行一个小模型，再换一个问题。 | 10–15 分钟 | [mini-lab-01.zip](https://github.com/newbdez33/mini-inference-lab/raw/refs/heads/main/packages/mini-lab-01.zip) |
 
 预计用时包括阅读和动手操作，首次安装与下载的等待时间另计。
 
@@ -16,7 +16,7 @@
 
 ## 更新教程
 
-根路径是课程目录，第一课位于 `/ep1/`。`episode-01/README.md` 是第一课正文的唯一来源；目录模板为 `scripts/catalog.html`。修改后，在仓库根目录构建页面和实验包：
+根路径是课程目录，第一课位于 `/1/`；旧 `/ep1/` 链接自动跳转。`episode-01/README.md` 是第一课正文的唯一来源；目录模板为 `scripts/catalog.html`，课程模板为 `scripts/lesson.html`。两页共用 `docs/assets/site.css` 和深浅主题设置。修改后，在仓库根目录构建页面和实验包：
 
 ```sh
 uv run --with Markdown==3.11.3 scripts/build_site.py

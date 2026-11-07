@@ -44,19 +44,30 @@ def main() -> None:
     content = converter.convert(source.replace(DOWNLOAD_URL, "../downloads/mini-lab-01.zip"))
     template = (ROOT / "scripts" / "lesson.html").read_text(encoding="utf-8")
     lesson_title = html.escape(title.removeprefix("# "))
-    style_version = hashlib.sha256((SITE / "assets" / "site.css").read_bytes()).hexdigest()[:12]
+    assets = SITE / "assets"
+    shared = {
+        "{{FIRST_PROMPT}}": html.escape(records["runs"][0]["input"]),
+        "{{FIRST_ANSWER}}": html.escape(records["runs"][0]["answer"]),
+        "{{MODEL_LABEL}}": html.escape(records["model"].split("/")[-1]),
+        "{{STYLE_VERSION}}": hashlib.sha256((assets / "site.css").read_bytes()).hexdigest()[:12],
+        "{{THEME_VERSION}}": hashlib.sha256((assets / "theme.js").read_bytes()).hexdigest()[:12],
+        "{{SCRIPT_VERSION}}": hashlib.sha256((assets / "site.js").read_bytes()).hexdigest()[:12],
+    }
     page = template.replace("{{TITLE}}", lesson_title)
-    page = page.replace("{{FIRST_PROMPT}}", html.escape(records["runs"][0]["input"]))
-    page = page.replace("{{FIRST_ANSWER}}", html.escape(records["runs"][0]["answer"]))
-    page = page.replace("{{STYLE_VERSION}}", style_version)
     page = page.replace("{{TOC}}", converter.toc).replace("{{CONTENT}}", content)
+    catalog = (ROOT / "scripts" / "catalog.html").read_text(encoding="utf-8")
+    catalog = catalog.replace("{{EP1_TITLE}}", lesson_title)
+    for placeholder, value in shared.items():
+        page = page.replace(placeholder, value)
+        catalog = catalog.replace(placeholder, value)
     SITE.mkdir(exist_ok=True)
-    lesson = SITE / "ep1"
+    lesson = SITE / "1"
     lesson.mkdir(exist_ok=True)
     (lesson / "index.html").write_text(page, encoding="utf-8")
-    catalog = (ROOT / "scripts" / "catalog.html").read_text(encoding="utf-8")
-    catalog = catalog.replace("{{STYLE_VERSION}}", style_version)
-    (SITE / "index.html").write_text(catalog.replace("{{EP1_TITLE}}", lesson_title), encoding="utf-8")
+    legacy = SITE / "ep1"
+    legacy.mkdir(exist_ok=True)
+    shutil.copy2(ROOT / "scripts" / "redirect.html", legacy / "index.html")
+    (SITE / "index.html").write_text(catalog, encoding="utf-8")
     (SITE / ".nojekyll").touch()
     package = build_package()
     downloads = SITE / "downloads"
@@ -66,7 +77,7 @@ def main() -> None:
         shutil.copy2(EPISODE / name, downloads / name)
     digest = hashlib.sha256(package.read_bytes()).hexdigest()
     (downloads / "SHA256SUMS").write_text(f"{digest}  {package.name}\n")
-    print(f"Built the catalog, ep1 tutorial, and {package.name} ({package.stat().st_size} bytes).")
+    print(f"Built the catalog, /1/ tutorial, legacy redirect, and {package.name} ({package.stat().st_size} bytes).")
 
 
 if __name__ == "__main__":

@@ -6,6 +6,7 @@ for (const pre of document.querySelectorAll(".tutorial pre")) {
   const text = code.textContent.replace(/\n$/, "");
   const language = (code.className.match(/language-([\w-]+)/) || [])[1] || "text";
   const isFileTree = text.startsWith("mini-lab-01/\n");
+  if (isFileTree) code.classList.add("file-tree");
   const copyLabel = language === "text" ? "复制问题" : "复制命令";
   const wrapper = document.createElement("div");
   wrapper.className = "code-block";
@@ -50,5 +51,5 @@ const observer = new IntersectionObserver(entries => {
       else link.removeAttribute("aria-current");
     }
   }
-}, {rootMargin: "-100px 0px -65% 0px", threshold: 0});
+}, {rootMargin: "-24px 0px -65% 0px", threshold: 0});
 for (const heading of document.querySelectorAll(".tutorial h2[id]")) observer.observe(heading);
